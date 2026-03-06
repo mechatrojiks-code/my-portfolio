@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MECHATROJIKS</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080810;
+    --bg2: #0d0d18;
+    --surface: #10101e;
+    --border: #1c1c32;
+    --cyan: #00f5ff;
+    --pink: #ff2d78;
+    --purple: #9b5cf6;
+    --yellow: #ffe500;
+    --text: #f4f4ff;
+    --muted: #c0c0e0;
+    --dim: #1e1e38;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Noise texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav { 
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.2rem 3rem;
+    background: rgba(8,8,16,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .logo {
+    font-size: 1.3rem; font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--cyan); }
+
+  nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: var(--text); }
+
+  .nav-hire {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid var(--cyan);
+    color: var(--cyan) !important;
+    font-size: 0.78rem !important;
+    transition: background 0.2s !important;
+    border-radius: 2px;
+  }
+  .nav-hire:hover { background: rgba(0,245,255,0.1) !important; }
+  .hamburger { display: none; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 7rem 3rem 4rem;
+    display: flex; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 1100px; width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  .orb1 { width: 500px; height: 500px; background: rgba(0,245,255,0.07); top: -100px; left: -100px; }
+  .orb2 { width: 400px; height: 400px; background: rgba(255,45,120,0.07); bottom: -50px; right: 200px; }
+  .orb3 { width: 300px; height: 300px; background: rgba(155,92,246,0.08); top: 50%; right: -50px; }
+
+  .hero-left { position: relative; z-index: 1; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--dim);
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 2rem;
+    font-family: 'Fira Code', monospace;
+  }
+  .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,245,255,0.4)} 50%{opacity:0.6;box-shadow:0 0 0 6px rgba(0,245,255,0)} }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 .cyan { color: var(--cyan); }
+  .hero h1 .pink { color: var(--pink); }
+
+  .hero-desc {
+    font-size: 0.95rem; color: var(--muted);
+    line-height: 1.8; max-width: 480px;
+    margin-bottom: 2.5rem; font-weight: 300;
+  }
+
+  .hero-desc strong { color: var(--text); font-weight: 600; }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-cyan {
+    padding: 0.8rem 2rem;
+    background: var(--cyan); color: var(--bg);
+    font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.05em; border: none;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s; border-radius: 2px;
+  }
+  .btn-cyan:hover { box-shadow: 0 0 20px rgba(0,245,255,0.4); transform: translateY(-2px); }
+
+  .btn-ghost {
+    padding: 0.8rem 2rem;
+    background: transparent; border: 1px solid var(--dim);
+    color: var(--muted); font-size: 0.82rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.2s; border-radius: 2px;
+  }
+  .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
+
+  /* TIKTOK CARD */
+  .tiktok-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .tiktok-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,245,255,0.04), rgba(255,45,120,0.04));
+    pointer-events: none;
+  }
+
+  .tiktok-header {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 1.5rem; padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tiktok-icon {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, #010101, #1a1a2e);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; border: 1px solid var(--border);
+  }
+
+  .tiktok-name { font-weight: 700; font-size: 0.95rem; }
+  .tiktok-handle { font-size: 0.72rem; color: var(--muted); font-family: 'Fira Code', monospace; }
+
+  .tiktok-stat-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; margin-bottom: 1.5rem;
+  }
+
+  .tik-stat {
+    text-align: center; padding: 0.8rem;
+    background: var(--dim); border-radius: 6px;
+  }
+  .tik-num { font-size: 1.6rem; font-weight: 800; color: var(--text); }
+  .tik-num span { color: var(--cyan); }
+  .tik-label { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+  .tiktok-topics { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+  .tik-topic {
+    padding: 0.3rem 0.7rem;
+    background: var(--dim); border: 1px solid var(--border);
+    font-size: 0.65rem; color: var(--muted); border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .tik-topic:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .tiktok-cta {
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    padding: 0.75rem;
+    background: linear-gradient(90deg, rgba(0,245,255,0.1), rgba(255,45,120,0.1));
+    border: 1px solid rgba(0,245,255,0.2);
+    border-radius: 6px;
+    text-decoration: none; color: var(--cyan);
+    font-size: 0.78rem; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .tiktok-cta:hover { background: rgba(0,245,255,0.15); }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+
+  .inner { max-width: 1100px; margin: 0 auto; }
+
+  .sec-row {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .sec-num { font-family: 'Fira Code', monospace; font-size: 0.7rem; color: var(--cyan); }
+  .sec-title { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.03em; }
+  .sec-hr { flex: 1; height: 1px; background: var(--border); }
+
+  /* ABOUT */
+  .about { background: var(--bg2); }
+
+  .about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 5rem; align-items: start; }
+
+  .about-text p {
+    font-size: 0.95rem; line-height: 1.9; color: var(--muted);
+    margin-bottom: 1.2rem; font-weight: 300;
+  }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+
+  .about-stack { display: flex; flex-direction: column; gap: 1px; }
+
+  .stack-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.2rem;
+    background: var(--surface); border: 1px solid var(--border);
+    transition: border-color 0.2s;
+  }
+  .stack-item:hover { border-color: var(--cyan); }
+  .stack-name { font-size: 0.82rem; font-weight: 600; }
+  .stack-bar-wrap { width: 100px; height: 4px; background: var(--dim); border-radius: 2px; overflow: hidden; }
+  .stack-bar { height: 100%; border-radius: 2px; animation: grow 1.2s ease both; }
+  @keyframes grow { from { width: 0; } }
+  .c { background: var(--cyan); }
+  .p { background: var(--pink); }
+  .v { background: var(--purple); }
+
+  /* PROJECTS */
+  .proj-container { display: flex; flex-direction: column; gap: 1px; }
+
+  .proj {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 2.5rem; display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 2rem; align-items: start;
+    text-decoration: none; color: inherit;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .proj::after {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--cyan);
+    transform: scaleY(0); transform-origin: bottom;
+    transition: transform 0.3s ease;
+  }
+  .proj:hover::after { transform: scaleY(1); }
+  .proj:hover { background: var(--dim); border-color: rgba(0,245,255,0.2); }
+
+  .proj-n {
+    font-family: 'Fira Code', monospace;
+    font-size: 2rem; font-weight: 500;
+    color: var(--dim); line-height: 1;
+    transition: color 0.2s;
+  }
+  .proj:hover .proj-n { color: var(--cyan); }
+
+  .proj-body {}
+  .proj-status {
+    display: inline-block; padding: 0.25rem 0.6rem;
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 3px; margin-bottom: 0.75rem;
+  }
+  .status-done { background: rgba(0,245,255,0.1); color: var(--cyan); border: 1px solid rgba(0,245,255,0.2); }
+  .status-wip { background: rgba(255,229,0,0.1); color: var(--yellow); border: 1px solid rgba(255,229,0,0.2); }
+  .status-freelance { background: rgba(155,92,246,0.1); color: var(--purple); border: 1px solid rgba(155,92,246,0.2); }
+  .proj-result {
+    margin-top: 0.8rem;
+    font-size: 0.72rem;
+    color: var(--cyan);
+    font-family: 'Fira Code', monospace;
+    letter-spacing: 0.04em;
+  }
+  .proj-result::before { content: '→ '; }
+
+  .proj-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; transition: color 0.2s; }
+  .proj:hover .proj-name { color: var(--cyan); }
+  .proj-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; font-weight: 300; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .ptag {
+    padding: 0.25rem 0.6rem;
+    background: var(--dim); border: 1px solid var(--border);
+    font-size: 0.65rem; color: var(--muted); border-radius: 3px;
+  }
+  .ptag.hi { border-color: var(--purple); color: var(--purple); }
+
+  .proj-arrow {
+    color: var(--muted); font-size: 1.3rem;
+    transition: transform 0.2s, color 0.2s; margin-top: 0.3rem;
+  }
+  .proj:hover .proj-arrow { transform: translate(4px,-4px); color: var(--cyan); }
+
+  /* TIKTOK SECTION */
+  .tiktok-section { background: var(--bg2); }
+
+  .tiktok-big {
+    background: linear-gradient(135deg, var(--surface), var(--bg2));
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 3rem; display: grid;
+    grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .tiktok-big::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,245,255,0.03), rgba(255,45,120,0.03));
+    pointer-events: none;
+  }
+
+  .tiktok-big-left h3 {
+    font-size: 2.5rem; font-weight: 800;
+    letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.1;
+  }
+  .tiktok-big-left h3 span { color: var(--cyan); }
+
+  .tiktok-big-left p {
+    font-size: 0.88rem; color: var(--muted);
+    line-height: 1.8; margin-bottom: 2rem; font-weight: 300;
+  }
+
+  .tik-stats-row { display: flex; gap: 2rem; margin-bottom: 2rem; }
+  .tik-big-stat {}
+  .tik-big-num { font-size: 2.2rem; font-weight: 900; line-height: 1; }
+  .tik-big-num.cy { color: var(--cyan); }
+  .tik-big-num.pk { color: var(--pink); }
+  .tik-big-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .tiktok-topics-big { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .ttopic {
+    padding: 0.4rem 0.9rem;
+    background: var(--dim); border: 1px solid var(--border);
+    font-size: 0.72rem; color: var(--muted); border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .ttopic:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .tiktok-big-right {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+
+  .tik-post {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .tik-post:hover { border-color: var(--pink); }
+  .tik-play {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--dim); display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0;
+  }
+  .tik-post-info { flex: 1; }
+  .tik-post-title { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .tik-post-views { font-size: 0.68rem; color: var(--muted); }
+  .tik-heart { color: var(--pink); font-size: 0.8rem; }
+
+  /* CONTACT */
+  .contact { padding: 6rem 3rem; }
+
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+
+  .contact-left h2 {
+    font-size: 3.5rem; font-weight: 900;
+    letter-spacing: -0.03em; line-height: 1; margin-bottom: 1.5rem;
+  }
+  .contact-left h2 .cy { color: var(--cyan); }
+  .contact-left p { font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; font-weight: 300; }
+
+  .clinks { display: flex; flex-direction: column; gap: 1px; }
+  .clink {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.2rem;
+    background: var(--surface); border: 1px solid var(--border);
+    text-decoration: none; color: var(--muted); font-size: 0.82rem;
+    transition: all 0.2s; font-weight: 500;
+  }
+  .clink:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,245,255,0.04); }
+  .clink span:last-child { transition: transform 0.2s; }
+  .clink:hover span:last-child { transform: translateX(4px); }
+
+  .cform { display: flex; flex-direction: column; gap: 1rem; }
+  .cflabel { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.4rem; font-family: 'Fira Code', monospace; }
+  .cfinput, .cftextarea {
+    width: 100%; background: var(--surface); border: 1px solid var(--border);
+    padding: 0.85rem 1rem; color: var(--text);
+    font-family: 'Outfit', sans-serif; font-size: 0.85rem;
+    outline: none; transition: border-color 0.2s; border-radius: 4px; resize: vertical;
+  }
+  .cfinput:focus, .cftextarea:focus { border-color: var(--cyan); }
+  .cftextarea { min-height: 110px; }
+  .cfinput::placeholder, .cftextarea::placeholder { color: var(--dim); }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 3rem; display: flex; justify-content: space-between;
+    font-size: 0.72rem; color: var(--muted);
+  }
+  .fcy { color: var(--cyan); }
+
+  /* ENTRY ANIMATIONS */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  .hero-left > * { animation: fadeUp 0.7s ease both; }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.2s; }
+  .hero-desc { animation-delay: 0.35s; }
+  .hero-btns { animation-delay: 0.5s; }
+
+  /* TABLET */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .tiktok-card { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .tiktok-big, .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .proj { grid-template-columns: auto 1fr; }
+    .proj-arrow { display: none; }
+    footer { flex-direction: column; gap: 0.5rem; padding: 1.5rem; }
+    #resume .inner > div { grid-template-columns: 1fr; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    nav { padding: 1rem; }
+    .nav-inner { position: relative; }
+    nav ul {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: -1rem;
+      right: -1rem;
+      background: rgba(8,8,16,0.98);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      gap: 0;
+      z-index: 999;
+    }
+    nav ul.open { display: flex; }
+    nav ul li a {
+      display: block;
+      padding: 0.85rem 1.5rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+    }
+    nav ul li:last-child a { border-bottom: none; }
+    .nav-hire { border: none !important; color: var(--cyan) !important; }
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .hero { padding: 5.5rem 1.2rem 3rem; }
+    .hero h1 { font-size: 3rem; }
+    .hero-desc { font-size: 0.88rem; }
+    .hero-btns { flex-direction: column; }
+    .btn-cyan, .btn-ghost { text-align: center; }
+    section { padding: 3rem 1.2rem; }
+    .sec-title { font-size: 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .stack-bar-wrap { width: 80px; }
+    .proj { grid-template-columns: 1fr; padding: 1.5rem; gap: 1rem; }
+    .proj-n { font-size: 1.3rem; }
+    .proj-name { font-size: 1rem; }
+    .tiktok-big { padding: 1.5rem; gap: 2rem; }
+    .tiktok-big-left h3 { font-size: 1.8rem; }
+    .tik-stats-row { gap: 1.5rem; }
+    .tik-big-num { font-size: 1.8rem; }
+    #resume .inner > div { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-left h2 { font-size: 2.5rem; }
+    footer { flex-direction: column; gap: 0.4rem; padding: 1.2rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">JIKO<span>.</span>GAANAN</div>
+    <ul id="nav-menu">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact" class="nav-hire">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-orb orb3"></div>
+  <div class="hero-inner">
+  <div class="hero-left">
+    <div class="hero-tag"><span class="pulse"></span> Open to remote work — Data Analyst</div>
+    <h1>
+      Data<br>
+      <span class="cyan">Analyst.</span><br>
+      <span class="pink">Creator.</span>
+    </h1>
+    <p class="hero-desc">
+      Test engineer turned <strong>data analyst</strong>. I find patterns in real-world data — from manufacturing defects to ML sensor datasets. I use <strong>Python, SQL, and Excel</strong> to turn messy data into clear decisions.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-cyan">See My Work</a>
+      <a href="#tiktok" class="btn-ghost">Watch My Content ↗</a>
+    </div>
+  </div>
+
+  <!-- TIKTOK CARD in hero -->
+  <div class="tiktok-card">
+    <div class="tiktok-header">
+      <div class="tiktok-icon">📱</div>
+      <div>
+        <div class="tiktok-name">@mechatrojiks</div>
+        <div class="tiktok-handle">TikTok Creator</div>
+      </div>
+    </div>
+    <div class="tiktok-stat-row">
+      <div class="tik-stat">
+        <div class="tik-num">2.5<span>K</span></div>
+        <div class="tik-label">Followers</div>
+      </div>
+      <div class="tik-stat">
+        <div class="tik-num" style="color:var(--pink)">Tech</div>
+        <div class="tik-label">Content</div>
+      </div>
+    </div>
+    <div class="tiktok-topics">
+      <span class="tik-topic">ESP32</span>
+      <span class="tik-topic">Arduino</span>
+      <span class="tik-topic">Robotics</span>
+      <span class="tik-topic">Data Analytics</span>
+      <span class="tik-topic">Desk Setup</span>
+      <span class="tik-topic">Programming</span>
+    </div>
+    <a href="https://www.tiktok.com/@mechatrojiks" class="tiktok-cta">▶ Visit Channel</a>
+  </div>
+  </div><!-- end hero-inner -->
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="inner">
+  <div class="sec-row">
+    <span class="sec-num">// 01</span>
+    <h2 class="sec-title">About</h2>
+    <div class="sec-hr"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>test engineer transitioning into data analytics</strong>, with 1–2 years of hands-on experience collecting and analyzing real production data. I know how data gets collected, what breaks it, and how to make it useful.</p>
+      <p>My background includes writing SQL queries to extract test results, building Excel reports for engineering teams, and using Python to automate repetitive data tasks. My ML projects — including <strong>thermal weapon detection using computer vision</strong> — gave me deep experience wrangling and analyzing real sensor datasets.</p>
+      <p>Outside of work, I create <strong>tech content across YouTube, TikTok, Instagram, and Facebook</strong> covering ESP32, Arduino, mechatronics, and data projects — because being able to explain technical things clearly is half the job.</p>
+    </div>
+    <div class="about-stack">
+      <div class="stack-item">
+        <span class="stack-name">Python</span>
+        <div class="stack-bar-wrap"><div class="stack-bar c" style="width:65%"></div></div>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">SQL</span>
+        <div class="stack-bar-wrap"><div class="stack-bar c" style="width:60%;animation-delay:0.1s"></div></div>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Excel</span>
+        <div class="stack-bar-wrap"><div class="stack-bar p" style="width:72%;animation-delay:0.2s"></div></div>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Machine Learning</span>
+        <div class="stack-bar-wrap"><div class="stack-bar v" style="width:55%;animation-delay:0.3s"></div></div>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Embedded Systems</span>
+        <div class="stack-bar-wrap"><div class="stack-bar c" style="width:68%;animation-delay:0.4s"></div></div>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Data Analysis</span>
+        <div class="stack-bar-wrap"><div class="stack-bar v" style="width:63%;animation-delay:0.5s"></div></div>
+      </div>
+    </div>
+  </div>
+  </div><!-- end inner -->
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="inner">
+  <div class="sec-row">
+    <span class="sec-num">// 02</span>
+    <h2 class="sec-title">Projects</h2>
+    <div class="sec-hr"></div>
+  </div>
+  <div class="proj-container">
+    <a href="#" class="proj">
+      <span class="proj-n">01</span>
+      <div class="proj-body">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+          <span class="proj-status status-done">Thesis Project</span>
+          <span class="proj-status status-freelance">Freelance · Student Client</span>
+        </div>
+        <div class="proj-name">ML-Based Physio-Behavioral Analysis with Data Logging</div>
+        <div class="proj-desc">High chick mortality rates are often caused by undetected early stress or illness. Built an ML system that monitors physio-behavioral patterns using multiple environment sensors — including a <strong style="color:var(--cyan);">thermal camera</strong> to track body temperature, alongside other sensors measuring surrounding conditions. All readings are automatically logged and structured in <strong style="color:var(--cyan);">Excel</strong>, giving farmers a clear data record to detect at-risk chicks early and act before losses occur.</div>
+        <div class="proj-tags">
+          <span class="ptag hi">Python</span>
+          <span class="ptag hi">Machine Learning</span>
+          <span class="ptag hi">Excel</span>
+          <span class="ptag hi">Data Logging</span>
+          <span class="ptag">Thermal Camera</span>
+          <span class="ptag">Multi-Sensor</span>
+          <span class="ptag">Behavioral Analysis</span>
+          <span class="ptag">Embedded Systems</span>
+        </div>
+        <div class="proj-result">Automated Excel logs replaced manual mortality tracking</div>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </a>
+    <a href="#" class="proj">
+      <span class="proj-n">02</span>
+      <div class="proj-body">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+          <span class="proj-status status-done">Capstone Project</span>
+          <span class="proj-status status-freelance">Freelance · Student Client</span>
+        </div>
+        <div class="proj-name">Automated University Scheduling System</div>
+        <div class="proj-desc">University scheduling was done manually — a slow, error-prone process that wasted staff time every semester. Built an intelligent scheduling application that automatically assigns rooms, professors, and time slots using constraint-based optimization, eliminating conflicts and cutting planning time significantly.</div>
+        <div class="proj-tags">
+          <span class="ptag hi">Python</span>
+          <span class="ptag hi">Optimization</span>
+          <span class="ptag">Database Design</span>
+          <span class="ptag">Algorithm</span>
+          <span class="ptag">UI/UX</span>
+        </div>
+        <div class="proj-result">Delivered and defended successfully by the client</div>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </a>
+    <a href="#" class="proj">
+      <span class="proj-n">03</span>
+      <div class="proj-body">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+          <span class="proj-status status-done">Thesis Project</span>
+          <span class="proj-status status-freelance">Freelance · Student Client</span>
+        </div>
+        <div class="proj-name">ML-Based Thermal Weapon Detection</div>
+        <div class="proj-desc">Small sari-sari stores are easy targets for theft but can't afford traditional security systems. Built a real-time weapon detection system using thermal imaging and a custom-trained ML model — giving small store owners an affordable, automated way to detect concealed weapons before incidents happen.</div>
+        <div class="proj-tags">
+          <span class="ptag hi">Python</span>
+          <span class="ptag hi">OpenCV</span>
+          <span class="ptag hi">Machine Learning</span>
+          <span class="ptag">TensorFlow</span>
+          <span class="ptag">Thermal Imaging</span>
+        </div>
+        <div class="proj-result">Delivered and defended successfully by the client</div>
+      </div>
+      <span class="proj-arrow">↗</span>
+    </a>
+  </div>
+  </div><!-- end inner -->
+</section>
+
+<!-- TIKTOK SECTION -->
+<section class="tiktok-section" id="tiktok">
+  <div class="inner">
+  <div class="sec-row">
+    <span class="sec-num">// 03</span>
+    <h2 class="sec-title">Content</h2>
+    <div class="sec-hr"></div>
+  </div>
+  <div class="tiktok-big">
+    <div class="tiktok-big-left">
+      <h3>Building in<br><span>public.</span></h3>
+      <p>I document my journey through tech on TikTok — from ESP32 builds and Arduino projects to mechatronics, desk setups, and data analytics. Real projects, real learning, real community.</p>
+      <div class="tik-stats-row">
+        <div class="tik-big-stat">
+          <div class="tik-big-num cy">2.3K</div>
+          <div class="tik-big-label">Followers</div>
+        </div>
+        <div class="tik-big-stat">
+          <div class="tik-big-num pk">Tech</div>
+          <div class="tik-big-label">Niche</div>
+        </div>
+      </div>
+      <div class="tiktok-topics-big">
+        <span class="ttopic">ESP32</span>
+        <span class="ttopic">Arduino</span>
+        <span class="ttopic">Mechatronics</span>
+        <span class="ttopic">Data Analytics</span>
+        <span class="ttopic">Robotics</span>
+        <span class="ttopic">Desk Setup</span>
+        <span class="ttopic">Programming</span>
+        <span class="ttopic">Projects</span>
+      </div>
+    </div>
+    <div class="tiktok-big-right">
+      <div class="tik-post">
+        <div class="tik-play">🤖</div>
+        <div class="tik-post-info">
+          <div class="tik-post-title">ESP32 Robotics Build</div>
+          <div class="tik-post-views">Embedded systems content</div>
+        </div>
+        <span class="tik-heart">♥</span>
+      </div>
+      <div class="tik-post">
+        <div class="tik-play">📊</div>
+        <div class="tik-post-info">
+          <div class="tik-post-title">Data Analytics Walkthrough</div>
+          <div class="tik-post-views">Python & pandas tutorial</div>
+        </div>
+        <span class="tik-heart">♥</span>
+      </div>
+      <div class="tik-post">
+        <div class="tik-play">🖥️</div>
+        <div class="tik-post-info">
+          <div class="tik-post-title">Desk Setup Tour</div>
+          <div class="tik-post-views">Developer workspace</div>
+        </div>
+        <span class="tik-heart">♥</span>
+      </div>
+      <div class="tik-post">
+        <div class="tik-play">⚙️</div>
+        <div class="tik-post-info">
+          <div class="tik-post-title">Mechatronics Project</div>
+          <div class="tik-post-views">Arduino automation</div>
+        </div>
+        <span class="tik-heart">♥</span>
+      </div>
+      <a href="#" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.9rem;background:linear-gradient(90deg,rgba(0,245,255,0.1),rgba(255,45,120,0.1));border:1px solid rgba(0,245,255,0.2);border-radius:6px;text-decoration:none;color:var(--cyan);font-size:0.78rem;font-weight:600;transition:all 0.2s;">
+        ▶ See All Videos on TikTok
+      </a>
+    </div>
+  </div>
+  </div><!-- end inner -->
+</section>
+
+<!-- RESUME -->
+<section id="resume" style="background: var(--bg2);">
+  <div class="inner">
+    <div class="sec-row">
+      <span class="sec-num">// 04</span>
+      <h2 class="sec-title">Resume</h2>
+      <div class="sec-hr"></div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+
+      <!-- Experience -->
+      <div>
+        <p style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--cyan); margin-bottom:1.5rem; font-family:'Fira Code',monospace;">Experience</p>
+        <div style="display:flex; flex-direction:column; gap:1px;">
+          <div style="background:var(--surface); border:1px solid var(--border); padding:1.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.5rem;">
+              <div style="font-weight:700; font-size:0.95rem;">Test Engineer</div>
+              <div style="font-size:0.68rem; color:var(--cyan); font-family:'Fira Code',monospace;">2025 – 2026</div>
+            </div>
+            <div style="font-size:0.75rem; color:var(--pink); margin-bottom:0.8rem;">Kinpo Electronics Philippines, Inc · Manufacturing</div>
+            <ul style="font-size:0.8rem; color:var(--muted); line-height:1.8; padding-left:1rem;">
+              <li>Extracted and analyzed test result data using SQL and Excel</li>
+              <li>Wrote Python scripts to automate repetitive data tasks</li>
+              <li>Identified defect patterns and reported findings to engineering teams</li>
+              <li>Worked with sensor data from hardware test setups</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education & Skills -->
+      <div style="display:flex; flex-direction:column; gap:2rem;">
+        <div>
+          <p style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--cyan); margin-bottom:1.5rem; font-family:'Fira Code',monospace;">Education</p>
+          <div style="background:var(--surface); border:1px solid var(--border); padding:1.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.5rem;">
+              <div style="font-weight:700; font-size:0.95rem;">BS Mechatronics Engineering</div>
+              <div style="font-size:0.68rem; color:var(--cyan); font-family:'Fira Code',monospace;">2020 – 2024</div>
+            </div>
+            <div style="font-size:0.75rem; color:var(--pink);">Batangas State University - TNEU</div>
+          </div>
+        </div>
+
+        <div>
+          <p style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--cyan); margin-bottom:1.5rem; font-family:'Fira Code',monospace;">Tools & Technologies</p>
+          <div style="background:var(--surface); border:1px solid var(--border); padding:1.5rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <span class="ptag hi">Python</span>
+            <span class="ptag hi">SQL</span>
+            <span class="ptag hi">Excel</span>
+            <span class="ptag hi">Pandas</span>
+            <span class="ptag">TensorFlow</span>
+            <span class="ptag">OpenCV</span>
+            <span class="ptag">Arduino</span>
+            <span class="ptag">ESP32</span>
+            <span class="ptag">Matplotlib</span>
+            <span class="ptag">Git</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Download button -->
+    <div style="margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+      <p style="font-size:0.85rem; color:var(--muted);">Want the full version? Download my resume as a PDF.</p>
+      <a href="#" class="btn-cyan" style="display:inline-flex; align-items:center; gap:0.5rem;">↓ Download Resume</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="inner">
+  <div class="sec-row">
+    <span class="sec-num">// 05</span>
+    <h2 class="sec-title">Contact</h2>
+    <div class="sec-hr"></div>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <h2>Let's<br><span class="cy">connect.</span></h2>
+      <p>Looking for remote <strong>data analyst roles</strong>. I bring real engineering data experience, Python/SQL skills, and the ability to communicate findings clearly. Let's work together.</p>
+      <div class="clinks">
+        <a href="/cdn-cgi/l/email-protection#b5ccdac0f5d0d8d4dcd99bd6dad8" class="clink"><span>✉ <span class="__cf_email__" data-cfemail="8af3e5ffcaefe7ebe3e6a4e9e5e7">[email&#160;protected]</span></span><span>→</span></a>
+        <a href="https://www.linkedin.com/in/jiko-gaanan/" class="clink"><span>in LinkedIn</span><span>→</span></a>
+        <a href="https://github.com/mechatrojiks-code" class="clink"><span>⌥ GitHub</span><span>→</span></a>
+        <a href="https://www.tiktok.com/@mechatrojiks" class="clink"><span>📱 TikTok @mechatrojiks</span><span>→</span></a>
+      </div>
+    </div>
+    <div class="cform">
+      <div><label class="cflabel">Name</label><input class="cfinput" placeholder="Your name"></div>
+      <div><label class="cflabel">Email</label><input class="cfinput" placeholder="your@email.com"></div>
+      <div><label class="cflabel">Message</label><textarea class="cftextarea" placeholder="Tell me about the opportunity..."></textarea></div>
+      <button class="btn-cyan" style="width:fit-content">Send Message</button>
+    </div>
+  </div>
+  </div><!-- end inner -->
+</section>
+
+<footer>
+  <span>© 2026 <span class="fcy">Jiko Gaanan</span></span>
+  <span>Data Analyst · Content Creator</span>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navMenu.classList.toggle('open');
+  });
+  // Close menu when a link is clicked
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navMenu.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
