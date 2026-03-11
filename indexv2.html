@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jiko Gaanan — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #080810;
+    --bg2:     #0d0d18;
+    --surface: #10101e;
+    --surface2:#13132a;
+    --border:  #1c1c32;
+    --dim:     #1e1e38;
+    --cyan:    #00f5ff;
+    --pink:    #ff2d78;
+    --purple:  #9b5cf6;
+    --yellow:  #ffe500;
+    --green:   #22c55e;
+    --text:    #f4f4ff;
+    --muted:   #c0c0e0;
+    --faint:   #6b6b9a;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* noise overlay */
+  body::after {
+    content:''; position:fixed; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:9998; opacity:0.4;
+  }
+
+  h1,h2,h3 { color:var(--text); line-height:1.15; }
+  h1 { font-size:clamp(2.8rem,5.5vw,4.2rem); font-weight:900; letter-spacing:-0.03em; }
+  h2 { font-size:clamp(1.9rem,3vw,2.6rem); font-weight:800; letter-spacing:-0.025em; }
+  h3 { font-size:1.15rem; font-weight:700; }
+  p  { color:var(--muted); font-size:0.93rem; line-height:1.85; font-weight:300; }
+  p strong { color:var(--text); font-weight:600; }
+  a  { color:var(--cyan); text-decoration:none; }
+
+  .container { max-width:1080px; margin:0 auto; padding:0 2.5rem; }
+  section { padding:5.5rem 0; }
+
+  .sec-label {
+    display:inline-flex; align-items:center; gap:0.5rem;
+    font-family:'Fira Code', monospace;
+    font-size:0.68rem; font-weight:500; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--cyan);
+    margin-bottom:0.8rem;
+  }
+  .sec-label::before { content:'//'; opacity:0.5; }
+
+  .sec-heading {
+    display:flex; align-items:center; gap:1rem; margin-bottom:3rem;
+  }
+  .sec-heading h2 { flex-shrink:0; }
+  .sec-line { flex:1; height:1px; background:var(--border); }
+
+  /* ── NAV ── */
+  nav {
+    position:sticky; top:0; z-index:1000;
+    padding:0 2.5rem;
+    background:rgba(8,8,16,0.9);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner {
+    max-width:1080px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    height:62px;
+  }
+  .nav-logo {
+    font-size:1.1rem; font-weight:900; letter-spacing:-0.02em;
+    color:var(--text); text-decoration:none;
+  }
+  .nav-logo span { color:var(--cyan); }
+  .nav-links { list-style:none; display:flex; align-items:center; gap:2rem; }
+  .nav-links a { font-size:0.82rem; font-weight:500; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--text); }
+  .nav-cta {
+    padding:0.45rem 1.1rem; border:1px solid var(--cyan);
+    color:var(--cyan) !important; border-radius:3px;
+    font-size:0.78rem !important;
+    transition:background 0.2s !important;
+  }
+  .nav-cta:hover { background:rgba(0,245,255,0.1) !important; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:4px; }
+  .hamburger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity:0; }
+  .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+  /* ── BUTTONS ── */
+  .btn-cyan {
+    display:inline-block; padding:0.75rem 1.8rem;
+    background:var(--cyan); color:var(--bg);
+    font-weight:700; font-size:0.84rem; letter-spacing:0.04em;
+    border:none; border-radius:3px; cursor:pointer;
+    text-decoration:none; transition:all 0.2s;
+  }
+  .btn-cyan:hover { box-shadow:0 0 22px rgba(0,245,255,0.4); transform:translateY(-2px); }
+  .btn-ghost {
+    display:inline-block; padding:0.75rem 1.8rem;
+    background:transparent; border:1px solid var(--dim);
+    color:var(--muted); font-size:0.84rem; font-weight:500;
+    border-radius:3px; cursor:pointer;
+    text-decoration:none; transition:all 0.2s;
+  }
+  .btn-ghost:hover { border-color:var(--purple); color:var(--purple); }
+
+  /* ── HERO ── */
+  .hero {
+    padding:7rem 0 5rem; position:relative; overflow:hidden;
+  }
+  /* orbs */
+  .orb { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; }
+  .orb1 { width:520px; height:520px; background:rgba(0,245,255,0.07); top:-120px; left:-120px; }
+  .orb2 { width:420px; height:420px; background:rgba(255,45,120,0.06); bottom:-60px; right:180px; }
+  .orb3 { width:300px; height:300px; background:rgba(155,92,246,0.08); top:40%; right:-40px; }
+
+  .hero-inner {
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:1fr 340px;
+    gap:4rem; align-items:center;
+  }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:0.6rem;
+    padding:0.35rem 0.9rem; border:1px solid var(--dim);
+    font-family:'Fira Code', monospace;
+    font-size:0.68rem; font-weight:500; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--muted);
+    margin-bottom:1.8rem; border-radius:2px;
+  }
+  .pulse { width:7px; height:7px; border-radius:50%; background:var(--green); animation:pulse 2s ease infinite; flex-shrink:0; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.4)} 50%{box-shadow:0 0 0 6px rgba(34,197,94,0)} }
+
+  .hero h1 { margin-bottom:1.4rem; }
+  .hero h1 .cy { color:var(--cyan); }
+  .hero h1 .pk { color:var(--pink); }
+  .hero-desc { max-width:500px; margin-bottom:2.2rem; font-size:0.96rem; }
+  .hero-actions { display:flex; gap:0.9rem; flex-wrap:wrap; }
+
+  /* hero photo card */
+  .hero-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:12px; overflow:hidden;
+    position:relative;
+  }
+  .hero-card::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg,rgba(0,245,255,0.03),rgba(255,45,120,0.03));
+    pointer-events:none; z-index:1;
+  }
+  .photo-frame {
+    position:relative; width:100%; aspect-ratio:4/5;
+    overflow:hidden; background:var(--dim);
+  }
+  .photo-frame img { width:100%; height:100%; object-fit:cover; display:block; }
+  /* corner accents */
+  .photo-frame::before,
+  .photo-frame::after { content:''; position:absolute; width:26px; height:26px; z-index:3; }
+  .photo-frame::before { top:10px; left:10px; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+  .photo-frame::after  { bottom:10px; right:10px; border-bottom:2px solid var(--pink); border-right:2px solid var(--pink); }
+  .corner-bl { position:absolute; bottom:10px; left:10px; width:26px; height:26px; border-bottom:2px solid var(--cyan); border-left:2px solid var(--cyan); z-index:3; }
+  .corner-tr { position:absolute; top:10px; right:10px; width:26px; height:26px; border-top:2px solid var(--pink); border-right:2px solid var(--pink); z-index:3; }
+
+  .hero-card-footer {
+    padding:1rem 1.2rem; position:relative; z-index:2;
+    display:flex; justify-content:space-between; align-items:center;
+    border-top:1px solid var(--border);
+  }
+  .hcf-badges { display:flex; gap:0.4rem; flex-wrap:wrap; }
+  .hbadge {
+    padding:0.22rem 0.6rem; border-radius:999px;
+    font-size:0.6rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase;
+  }
+  .hb-c { background:rgba(0,245,255,0.1);  border:1px solid rgba(0,245,255,0.25);  color:var(--cyan);   }
+  .hb-p { background:rgba(255,45,120,0.1); border:1px solid rgba(255,45,120,0.25); color:var(--pink);   }
+  .hb-v { background:rgba(155,92,246,0.1); border:1px solid rgba(155,92,246,0.25); color:var(--purple); }
+
+  .hero-stats {
+    display:flex; gap:1.5rem; padding:1rem 1.2rem;
+    border-top:1px solid var(--border); position:relative; z-index:2;
+    background:rgba(0,0,0,0.15);
+  }
+  .hstat { text-align:center; }
+  .hstat-num { font-size:1.3rem; font-weight:800; color:var(--text); line-height:1; }
+  .hstat-label { font-size:0.58rem; color:var(--faint); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem; }
+
+  /* ── ABOUT ── */
+  .about { background:var(--bg2); }
+  .about-grid { display:grid; grid-template-columns:3fr 2fr; gap:4rem; align-items:start; }
+  .about-cards { display:flex; flex-direction:column; gap:2px; }
+  .about-card {
+    background:var(--surface); border:1px solid var(--border);
+    padding:1rem 1.2rem; display:flex; align-items:center; gap:1rem;
+    transition:border-color 0.2s;
+  }
+  .about-card:hover { border-color:rgba(0,245,255,0.3); }
+  .ac-icon {
+    width:36px; height:36px; border-radius:7px; flex-shrink:0;
+    background:var(--dim); display:flex; align-items:center;
+    justify-content:center; font-size:1rem;
+  }
+  .ac-title { font-size:0.85rem; font-weight:600; color:var(--text); margin-bottom:0.1rem; }
+  .ac-sub   { font-size:0.72rem; color:var(--faint); }
+
+  /* ── SKILLS ── */
+  .skills { background:var(--bg); }
+  .skills-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1px; background:var(--border);
+    border:1px solid var(--border); border-radius:8px; overflow:hidden;
+  }
+  .sk-card {
+    background:var(--surface); padding:1.8rem 1.6rem;
+    display:flex; flex-direction:column; gap:0.9rem;
+    transition:background 0.2s; position:relative; overflow:hidden;
+  }
+  .sk-card::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+    transform:scaleX(0); transform-origin:left; transition:transform 0.35s ease;
+  }
+  .sk-card:hover { background:var(--dim); }
+  .sk-card:hover::after { transform:scaleX(1); }
+  .sk-card.c::after { background:var(--cyan); }
+  .sk-card.p::after { background:var(--pink); }
+  .sk-card.v::after { background:var(--purple); }
+  .sk-card.y::after { background:var(--yellow); }
+  .sk-card.g::after { background:var(--muted); }
+
+  .sk-top { display:flex; align-items:center; gap:0.8rem; }
+  .sk-icon {
+    width:40px; height:40px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.78rem; font-weight:800; font-family:'Fira Code', monospace;
+  }
+  .si-c { background:rgba(0,245,255,0.1);   color:var(--cyan);   border:1px solid rgba(0,245,255,0.2);   }
+  .si-v { background:rgba(155,92,246,0.1);  color:var(--purple); border:1px solid rgba(155,92,246,0.2);  }
+  .si-y { background:rgba(255,229,0,0.1);   color:var(--yellow); border:1px solid rgba(255,229,0,0.2);   }
+  .si-p { background:rgba(255,45,120,0.1);  color:var(--pink);   border:1px solid rgba(255,45,120,0.2);  }
+  .si-g { background:rgba(192,192,224,0.07);color:var(--muted);  border:1px solid rgba(192,192,224,0.14);}
+
+  .sk-name { font-size:0.95rem; font-weight:700; }
+  .sk-desc { font-size:0.75rem; color:var(--muted); line-height:1.6; font-weight:300; }
+  .sk-tags { display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:auto; }
+  .sktag {
+    font-size:0.6rem; padding:0.15rem 0.5rem;
+    background:var(--dim); border:1px solid var(--border);
+    border-radius:3px; color:var(--faint);
+    font-family:'Fira Code', monospace;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience { background:var(--bg2); }
+  .exp-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+  .exp-col-label {
+    font-family:'Fira Code', monospace;
+    font-size:0.65rem; font-weight:500; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--cyan); margin-bottom:1rem;
+  }
+  .exp-item {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:8px; padding:1.5rem; position:relative;
+  }
+  .exp-item + .exp-item { margin-top:0.8rem; }
+  .exp-role { font-size:0.95rem; font-weight:700; color:var(--text); margin-bottom:0.2rem; }
+  .exp-company { font-size:0.78rem; color:var(--pink); font-weight:500; margin-bottom:0.9rem; }
+  .exp-date {
+    position:absolute; top:1.4rem; right:1.4rem;
+    font-family:'Fira Code', monospace;
+    font-size:0.65rem; color:var(--cyan);
+    background:rgba(0,245,255,0.06); border:1px solid rgba(0,245,255,0.15);
+    padding:0.18rem 0.6rem; border-radius:3px;
+  }
+  .exp-bullets { list-style:none; display:flex; flex-direction:column; gap:0.45rem; }
+  .exp-bullets li {
+    font-size:0.8rem; color:var(--muted); line-height:1.65;
+    padding-left:1rem; position:relative; font-weight:300;
+  }
+  .exp-bullets li::before { content:'→'; position:absolute; left:0; color:var(--faint); font-size:0.7rem; top:0.2rem; }
+  .exp-tip {
+    margin-top:1rem; padding:0.7rem 0.9rem;
+    background:rgba(255,229,0,0.05); border:1px solid rgba(255,229,0,0.2);
+    border-radius:6px; font-size:0.72rem; color:#a08000; line-height:1.6;
+  }
+  .exp-tip strong { color:var(--yellow); }
+
+  /* ── PROJECTS ── */
+  .projects { background:var(--bg); }
+  .proj-notice {
+    display:flex; gap:0.7rem; align-items:flex-start;
+    padding:1rem 1.2rem; margin-bottom:1.5rem;
+    background:rgba(255,229,0,0.05); border:1px solid rgba(255,229,0,0.2);
+    border-radius:6px; font-size:0.8rem; color:#a08000;
+  }
+  .proj-notice strong { color:var(--yellow); }
+  .proj-list { display:flex; flex-direction:column; gap:1px; }
+  .proj-card {
+    background:var(--surface); border:1px solid var(--border);
+    padding:2.2rem; display:grid; grid-template-columns:56px 1fr auto;
+    gap:1.8rem; align-items:start; text-decoration:none; color:inherit;
+    transition:background 0.2s, border-color 0.2s; position:relative; overflow:hidden;
+  }
+  .proj-card::before {
+    content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+    background:var(--cyan); transform:scaleY(0); transform-origin:bottom;
+    transition:transform 0.3s ease;
+  }
+  .proj-card:hover::before { transform:scaleY(1); }
+  .proj-card:hover { background:var(--dim); border-color:rgba(0,245,255,0.2); }
+  .proj-num {
+    font-family:'Fira Code', monospace; font-size:1.8rem; font-weight:500;
+    color:var(--dim); line-height:1; transition:color 0.2s;
+  }
+  .proj-card:hover .proj-num { color:var(--cyan); }
+  .proj-badges { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.7rem; }
+  .pbadge {
+    font-size:0.6rem; font-weight:700; letter-spacing:0.09em; text-transform:uppercase;
+    padding:0.22rem 0.6rem; border-radius:3px;
+  }
+  .pb-c { background:rgba(0,245,255,0.1);  border:1px solid rgba(0,245,255,0.2);  color:var(--cyan);   }
+  .pb-v { background:rgba(155,92,246,0.1); border:1px solid rgba(155,92,246,0.2); color:var(--purple); }
+  .proj-title { font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:0.5rem; transition:color 0.2s; }
+  .proj-card:hover .proj-title { color:var(--cyan); }
+  .proj-desc { font-size:0.8rem; color:var(--muted); line-height:1.75; margin-bottom:0.9rem; font-weight:300; }
+  .proj-result {
+    font-size:0.7rem; color:var(--cyan);
+    font-family:'Fira Code', monospace; letter-spacing:0.04em; margin-bottom:0.9rem;
+  }
+  .proj-result::before { content:'→ '; }
+  .proj-tags { display:flex; flex-wrap:wrap; gap:0.35rem; }
+  .ptag {
+    font-size:0.63rem; padding:0.2rem 0.55rem;
+    background:var(--dim); border:1px solid var(--border);
+    border-radius:3px; color:var(--muted);
+  }
+  .ptag.hi { border-color:var(--purple); color:var(--purple); }
+  .proj-arrow { font-size:1.2rem; color:var(--muted); transition:transform 0.2s, color 0.2s; margin-top:0.2rem; }
+  .proj-card:hover .proj-arrow { transform:translate(4px,-4px); color:var(--cyan); }
+
+  /* ── CONTENT ── */
+  .content-sec { background:var(--bg2); }
+  .content-inner { display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:start; }
+  .content-left h2 { margin-bottom:1rem; }
+  .content-left p { margin-bottom:1.5rem; }
+  .c-stats { display:flex; gap:2rem; margin-bottom:1.5rem; }
+  .cstat-num { font-size:2rem; font-weight:900; line-height:1; }
+  .cstat-num.cy { color:var(--cyan); }
+  .cstat-num.pk { color:var(--pink); }
+  .cstat-label { font-size:0.62rem; color:var(--faint); text-transform:uppercase; letter-spacing:0.1em; }
+  .c-topics { display:flex; flex-wrap:wrap; gap:0.4rem; }
+  .ctopic {
+    padding:0.32rem 0.8rem; background:var(--dim); border:1px solid var(--border);
+    border-radius:999px; font-size:0.7rem; color:var(--muted);
+    transition:all 0.2s; cursor:default;
+  }
+  .ctopic:hover { border-color:var(--cyan); color:var(--cyan); }
+  .c-posts { display:flex; flex-direction:column; gap:0.6rem; }
+  .c-post {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:8px; padding:0.9rem 1.1rem;
+    display:flex; align-items:center; gap:0.9rem;
+    transition:border-color 0.2s;
+  }
+  .c-post:hover { border-color:var(--pink); }
+  .c-play { width:36px; height:36px; border-radius:7px; background:var(--dim); display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
+  .c-post-title { font-size:0.8rem; font-weight:600; color:var(--text); margin-bottom:0.1rem; }
+  .c-post-sub { font-size:0.68rem; color:var(--faint); }
+  .tiktok-link {
+    display:flex; align-items:center; justify-content:center; gap:0.5rem;
+    margin-top:0.7rem; padding:0.85rem;
+    background:linear-gradient(90deg,rgba(0,245,255,0.1),rgba(255,45,120,0.1));
+    border:1px solid rgba(0,245,255,0.2); border-radius:7px;
+    text-decoration:none; color:var(--cyan);
+    font-size:0.8rem; font-weight:600; transition:all 0.2s;
+  }
+  .tiktok-link:hover { background:rgba(0,245,255,0.15); }
+
+  /* ── CONTACT ── */
+  .contact-sec { background:var(--bg); }
+  .contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+  .contact-left h2 { margin-bottom:1rem; }
+  .contact-left h2 span { color:var(--cyan); }
+  .contact-left p { margin-bottom:1.5rem; }
+  .c-links { display:flex; flex-direction:column; gap:1px; margin-bottom:1.5rem; }
+  .c-link {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1rem 1.2rem; background:var(--surface); border:1px solid var(--border);
+    text-decoration:none; color:var(--muted); font-size:0.83rem; font-weight:500;
+    transition:all 0.2s;
+  }
+  .c-link:hover { border-color:var(--cyan); color:var(--cyan); background:rgba(0,245,255,0.04); }
+  .c-link span:last-child { transition:transform 0.2s; }
+  .c-link:hover span:last-child { transform:translateX(4px); }
+  .cform { display:flex; flex-direction:column; gap:0.9rem; }
+  .clabel {
+    font-family:'Fira Code', monospace; font-size:0.62rem; font-weight:500;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--muted);
+    display:block; margin-bottom:0.35rem;
+  }
+  .cinput, .ctextarea {
+    width:100%; background:var(--surface); border:1px solid var(--border);
+    padding:0.8rem 1rem; color:var(--text);
+    font-family:'Outfit', sans-serif; font-size:0.85rem;
+    outline:none; transition:border-color 0.2s; border-radius:4px; resize:vertical;
+  }
+  .cinput:focus, .ctextarea:focus { border-color:var(--cyan); }
+  .cinput::placeholder, .ctextarea::placeholder { color:var(--dim); }
+  .ctextarea { min-height:110px; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top:1px solid var(--border); padding:1.6rem 2.5rem;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:0.72rem; color:var(--faint);
+  }
+  footer .cy { color:var(--cyan); }
+  footer a { color:var(--faint); text-decoration:none; transition:color 0.2s; }
+  footer a:hover { color:var(--cyan); }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+    background:var(--bg2); overflow:hidden; position:relative;
+  }
+  .marquee-wrap::before,
+  .marquee-wrap::after {
+    content:''; position:absolute; top:0; bottom:0; width:100px; z-index:2; pointer-events:none;
+  }
+  .marquee-wrap::before { left:0;  background:linear-gradient(to right, var(--bg2), transparent); }
+  .marquee-wrap::after  { right:0; background:linear-gradient(to left,  var(--bg2), transparent); }
+  .mrow { padding:0.7rem 0; display:flex; overflow:hidden; }
+  .mtrack { display:flex; width:max-content; animation:mleft 30s linear infinite; }
+  .mtrack.rev { animation-name:mright; animation-duration:38s; }
+  .mtrack:hover { animation-play-state:paused; }
+  @keyframes mleft  { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes mright { from{transform:translateX(-50%)} to{transform:translateX(0)} }
+  .mchip {
+    display:inline-flex; align-items:center; gap:0.45rem;
+    padding:0.4rem 1rem; margin:0 0.3rem;
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:999px; font-size:0.72rem; font-weight:600;
+    color:var(--muted); white-space:nowrap; transition:border-color 0.2s, color 0.2s; cursor:default;
+  }
+  .mchip:hover { border-color:var(--cyan); color:var(--cyan); }
+  .mchip.ac { border-color:rgba(0,245,255,0.25);  color:var(--cyan);   }
+  .mchip.ap { border-color:rgba(255,45,120,0.25); color:var(--pink);   }
+  .mchip.av { border-color:rgba(155,92,246,0.25); color:var(--purple); }
+  .mchip.ay { border-color:rgba(255,229,0,0.25);  color:var(--yellow); }
+  .mdot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+  .mdot.c { background:var(--cyan);   }
+  .mdot.p { background:var(--pink);   }
+  .mdot.v { background:var(--purple); }
+  .mdot.y { background:var(--yellow); }
+  .mdot.g { background:var(--muted);  }
+  .msep { color:var(--dim); margin:0 0.7rem; font-size:0.6rem; align-self:center; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+  .hero-left > * { animation:fadeUp 0.65s ease both; }
+  .hero-left > *:nth-child(1){ animation-delay:0.05s }
+  .hero-left > *:nth-child(2){ animation-delay:0.15s }
+  .hero-left > *:nth-child(3){ animation-delay:0.28s }
+  .hero-left > *:nth-child(4){ animation-delay:0.4s  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:880px) {
+    .hero-inner, .about-grid, .exp-grid, .content-inner, .contact-inner { grid-template-columns:1fr; gap:2.5rem; }
+    .hero { padding:5.5rem 0 4rem; }
+    .hero-card { max-width:300px; margin:0 auto; }
+    .skills-grid { grid-template-columns:repeat(2,1fr); }
+    .proj-card { grid-template-columns:40px 1fr; }
+    .proj-arrow { display:none; }
+  }
+  @media (max-width:600px) {
+    nav { padding:0 1rem; }
+    .nav-links {
+      display:none; flex-direction:column; position:absolute;
+      top:62px; left:0; right:0;
+      background:rgba(8,8,16,0.98); backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border); padding:1rem 0; gap:0; z-index:999;
+    }
+    .nav-links.open { display:flex; }
+    .nav-links li a { display:block; padding:0.85rem 1.5rem; font-size:0.9rem; border-bottom:1px solid var(--border); }
+    .nav-links li:last-child a { border-bottom:none; }
+    .nav-cta { border:none !important; }
+    .hamburger { display:flex; }
+    .container { padding:0 1.2rem; }
+    section { padding:4rem 0; }
+    h1 { font-size:2.4rem; }
+    h2 { font-size:1.7rem; }
+    .skills-grid { grid-template-columns:1fr; }
+    .hero-actions { flex-direction:column; }
+    .btn-cyan, .btn-ghost { text-align:center; }
+    footer { flex-direction:column; gap:0.5rem; text-align:center; padding:1.2rem; }
+    .marquee-wrap::before, .marquee-wrap::after { width:40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">JIKO<span>.</span>GAANAN</a>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge"><span class="pulse"></span> Open to Work</div>
+        <h1>
+          Engineer.<br>
+          <span class="cy">Analyst.</span><br>
+          <span class="pk">Creator.</span>
+        </h1>
+        <p class="hero-desc">
+          I'm <strong>Jiko Gaanan</strong> — a Mechatronics Engineer with hands-on experience
+          in test engineering, data analysis, and machine learning. I build real systems,
+          analyze real data, and explain technical things clearly.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn-cyan">View My Work</a>
+          <a href="#contact" class="btn-ghost">Get in Touch</a>
+        </div>
+      </div>
+
+      <!-- PHOTO CARD -->
+      <div class="hero-card">
+        <div class="photo-frame">
+          <div class="corner-bl"></div>
+          <div class="corner-tr"></div>
+          <img src="jD.png" alt="Jiko Gaanan"
+            onerror="this.outerHTML='<div style=\'width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;color:#6b6b9a;font-size:0.75rem;font-family:Fira Code,monospace;\'><span style=\'font-size:3.5rem;opacity:0.2\'>👤</span><span>me.jpeg</span></div>'">
+        </div>
+        <div class="hero-stats">
+          <div class="hstat">
+            <div class="hstat-num">3</div>
+            <div class="hstat-label">Projects</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-num">1 yr</div>
+            <div class="hstat-label">Experience</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-num">2.5K</div>
+            <div class="hstat-label">Followers</div>
+          </div>
+        </div>
+        <div class="hero-card-footer">
+          <div class="hcf-badges">
+            <span class="hbadge hb-c">Engineer</span>
+            <span class="hbadge hb-p">Creator</span>
+            <span class="hbadge hb-v">Analyst</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="mrow">
+    <div class="mtrack">
+      <span class="mchip ac"><span class="mdot c"></span>Python</span>
+      <span class="mchip ac"><span class="mdot c"></span>Pandas</span>
+      <span class="mchip ac"><span class="mdot c"></span>NumPy</span>
+      <span class="mchip av"><span class="mdot v"></span>SQL</span>
+      <span class="mchip av"><span class="mdot v"></span>PostgreSQL</span>
+      <span class="mchip ay"><span class="mdot y"></span>Excel</span>
+      <span class="mchip ay"><span class="mdot y"></span>Power BI</span>
+      <span class="mchip ap"><span class="mdot p"></span>Matplotlib</span>
+      <span class="mchip ap"><span class="mdot p"></span>Seaborn</span>
+      <span class="mchip"><span class="mdot g"></span>Scikit-learn</span>
+      <span class="mchip"><span class="mdot g"></span>TensorFlow</span>
+      <span class="mchip ac"><span class="mdot c"></span>OpenCV</span>
+      <span class="mchip"><span class="mdot g"></span>Arduino</span>
+      <span class="mchip"><span class="mdot g"></span>ESP32</span>
+      <span class="mchip av"><span class="mdot v"></span>Git</span>
+      <span class="mchip ay"><span class="mdot y"></span>Jupyter</span>
+      <span class="msep">✦</span>
+      <span class="mchip ac"><span class="mdot c"></span>Python</span>
+      <span class="mchip ac"><span class="mdot c"></span>Pandas</span>
+      <span class="mchip ac"><span class="mdot c"></span>NumPy</span>
+      <span class="mchip av"><span class="mdot v"></span>SQL</span>
+      <span class="mchip av"><span class="mdot v"></span>PostgreSQL</span>
+      <span class="mchip ay"><span class="mdot y"></span>Excel</span>
+      <span class="mchip ay"><span class="mdot y"></span>Power BI</span>
+      <span class="mchip ap"><span class="mdot p"></span>Matplotlib</span>
+      <span class="mchip ap"><span class="mdot p"></span>Seaborn</span>
+      <span class="mchip"><span class="mdot g"></span>Scikit-learn</span>
+      <span class="mchip"><span class="mdot g"></span>TensorFlow</span>
+      <span class="mchip ac"><span class="mdot c"></span>OpenCV</span>
+      <span class="mchip"><span class="mdot g"></span>Arduino</span>
+      <span class="mchip"><span class="mdot g"></span>ESP32</span>
+      <span class="mchip av"><span class="mdot v"></span>Git</span>
+      <span class="mchip ay"><span class="mdot y"></span>Jupyter</span>
+      <span class="msep">✦</span>
+    </div>
+  </div>
+  <div class="mrow">
+    <div class="mtrack rev">
+      <span class="mchip ay"><span class="mdot y"></span>Data Wrangling</span>
+      <span class="mchip ac"><span class="mdot c"></span>EDA</span>
+      <span class="mchip av"><span class="mdot v"></span>Machine Learning</span>
+      <span class="mchip ap"><span class="mdot p"></span>Computer Vision</span>
+      <span class="mchip ac"><span class="mdot c"></span>Data Visualization</span>
+      <span class="mchip"><span class="mdot g"></span>Test Automation</span>
+      <span class="mchip ay"><span class="mdot y"></span>Statistical Analysis</span>
+      <span class="mchip av"><span class="mdot v"></span>Embedded Systems</span>
+      <span class="mchip ap"><span class="mdot p"></span>Dashboard Design</span>
+      <span class="mchip"><span class="mdot g"></span>QA Engineering</span>
+      <span class="mchip av"><span class="mdot v"></span>ETL</span>
+      <span class="mchip ap"><span class="mdot p"></span>Mechatronics</span>
+      <span class="msep">✦</span>
+      <span class="mchip ay"><span class="mdot y"></span>Data Wrangling</span>
+      <span class="mchip ac"><span class="mdot c"></span>EDA</span>
+      <span class="mchip av"><span class="mdot v"></span>Machine Learning</span>
+      <span class="mchip ap"><span class="mdot p"></span>Computer Vision</span>
+      <span class="mchip ac"><span class="mdot c"></span>Data Visualization</span>
+      <span class="mchip"><span class="mdot g"></span>Test Automation</span>
+      <span class="mchip ay"><span class="mdot y"></span>Statistical Analysis</span>
+      <span class="mchip av"><span class="mdot v"></span>Embedded Systems</span>
+      <span class="mchip ap"><span class="mdot p"></span>Dashboard Design</span>
+      <span class="mchip"><span class="mdot g"></span>QA Engineering</span>
+      <span class="mchip av"><span class="mdot v"></span>ETL</span>
+      <span class="mchip ap"><span class="mdot p"></span>Mechatronics</span>
+      <span class="msep">✦</span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <span class="sec-label">01 About</span>
+    <div class="sec-heading">
+      <h2>Who I Am</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a <strong>BS Mechatronics Engineering graduate</strong> from Batangas State University, currently working as a Test Engineer at Kinpo Electronics Philippines. My role sits at the intersection of hardware, software, and data. I work with real production test data every day in a manufacturing environment.</p>
+        <br>
+        <p>I understand how data is physically collected, what causes it to break, and how to interpret it in context. I have written SQL to pull test results, maintain Python scripts for testing automation, and trained ML models on real sensor datasets.</p>
+        <br>
+        <p>Outside of work, I document my projects and learning journey online. I post on platforms like Tiktok, Youtube, Instagram, and Facebook to showcase Mechatronics Engineering, tech, and how I taught myself to continuous learning and upskilling.</p>
+      </div>
+      <div class="about-cards">
+        <div class="about-card">
+          <div class="ac-icon">🎓</div>
+          <div>
+            <div class="ac-title">BS Mechatronics Engineering</div>
+            <div class="ac-sub">Batangas State University – TNEU · 2020–2024</div>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="ac-icon">🏭</div>
+          <div>
+            <div class="ac-title">Test Engineer</div>
+            <div class="ac-sub">Kinpo Electronics Philippines · 2025–Present</div>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="ac-icon">📊</div>
+          <div>
+            <div class="ac-title">Data & ML Projects</div>
+            <div class="ac-sub">3 completed projects using Python, OpenCV & TensorFlow</div>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="ac-icon">📱</div>
+          <div>
+            <div class="ac-title">Tech Content Creator</div>
+            <div class="ac-sub">@mechatrojiks · ESP32, Arduino, Data, Robotics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="container">
+    <span class="sec-label">02 Skills</span>
+    <div class="sec-heading">
+      <h2>Languages & Tools</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="sk-card c">
+        <div class="sk-top"><div class="sk-icon si-c">Py</div><div class="sk-name">Python</div></div>
+        <div class="sk-desc">Data wrangling, automation, and ML pipelines. Used across all three major projects and daily work tasks.</div>
+        <div class="sk-tags"><span class="sktag">Pandas</span><span class="sktag">NumPy</span><span class="sktag">Matplotlib</span><span class="sktag">Seaborn</span><span class="sktag">Jupyter</span></div>
+      </div>
+      <div class="sk-card v">
+        <div class="sk-top"><div class="sk-icon si-v">SQL</div><div class="sk-name">SQL</div></div>
+        <div class="sk-desc">Extracting and querying production test result data from databases. Used daily on the job.</div>
+        <div class="sk-tags"><span class="sktag">MySQL</span><span class="sktag">Joins</span><span class="sktag">Aggregations</span><span class="sktag">Subqueries</span></div>
+      </div>
+      <div class="sk-card y">
+        <div class="sk-top"><div class="sk-icon si-y">XL</div><div class="sk-name">Excel</div></div>
+        <div class="sk-desc">Building structured reports, automated data logs, and dashboards for engineering teams.</div>
+        <div class="sk-tags"><span class="sktag">Pivot Tables</span><span class="sktag">VLOOKUP</span><span class="sktag">Data Logging</span><span class="sktag">Dashboards</span></div>
+      </div>
+      <div class="sk-card p">
+        <div class="sk-top"><div class="sk-icon si-p">ML</div><div class="sk-name">Machine Learning</div></div>
+        <div class="sk-desc">Trained and deployed CV models for thermal imaging and behavioral pattern recognition in real projects.</div>
+        <div class="sk-tags"><span class="sktag">TensorFlow</span><span class="sktag">YOLO</span><span class="sktag">OpenCV</span><span class="sktag">Computer Vision</span></div>
+      </div>
+      <div class="sk-card c">
+        <div class="sk-top"><div class="sk-icon si-c">C++</div><div class="sk-name">Embedded / C++</div></div>
+        <div class="sk-desc">Programming microcontrollers for IoT and sensor systems — the origin of the data I later analyze.</div>
+        <div class="sk-tags"><span class="sktag">Arduino</span><span class="sktag">ESP32</span><span class="sktag">C++</span><span class="sktag">Sensors</span><span class="sktag">IoT</span></div>
+      </div>
+      <div class="sk-card g">
+        <div class="sk-top"><div class="sk-icon si-g">⚙</div><div class="sk-name">Dev Tools</div></div>
+        <div class="sk-desc">Version control, notebooks, and productivity tools across all personal and client work.</div>
+        <div class="sk-tags"><span class="sktag">Git</span><span class="sktag">GitHub</span><span class="sktag">VS Code</span><span class="sktag">Jupyter</span><span class="sktag">Google Sheets</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="container">
+    <span class="sec-label">03 Background</span>
+    <div class="sec-heading">
+      <h2>Experience & Education</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="exp-grid">
+      <div>
+        <div class="exp-col-label">Work Experience</div>
+        <div class="exp-item">
+          <div class="exp-role">Test Engineer</div>
+          <div class="exp-company">Kinpo Electronics Philippines, Inc · Manufacturing</div>
+          <div class="exp-date">2025 – Present</div>
+          <ul class="exp-bullets">
+            <li>Extracted and queried test result data from production databases using SQL and Excel</li>
+            <li>Wrote Python scripts to automate repetitive data cleaning and reporting tasks</li>
+            <li>Identified defect patterns in hardware test data and reported findings to engineering teams</li>
+            <li>Worked daily with sensor data generated from hardware test setups</li>
+          </ul>
+          <div class="exp-tip">
+            💡 <strong>To do:</strong> Add specific numbers — units tested per day, time saved by automation, defect rate improvements. Numbers make this section much stronger.
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="exp-col-label">Education</div>
+        <div class="exp-item">
+          <div class="exp-role">BS Mechatronics Engineering</div>
+          <div class="exp-company">Batangas State University – TNEU</div>
+          <div class="exp-date">2020 – 2024</div>
+          <ul class="exp-bullets">
+            <li>Thesis on ML-based physio-behavioral monitoring using thermal and multi-sensor data</li>
+            <li>Built and programmed embedded systems using Arduino and ESP32</li>
+            <li>Developed data logging pipelines outputting structured Excel reports</li>
+          </ul>
+        </div>
+
+        <div class="exp-col-label" style="margin-top:1.8rem;">Certifications</div>
+        <div class="exp-item">
+          <div class="exp-role" style="color:var(--faint);font-style:italic;font-weight:400;font-size:0.85rem;">None listed yet</div>
+          <div class="exp-tip" style="margin-top:0.6rem;">
+            💡 <strong>Recommended:</strong> Google Data Analytics Certificate, Microsoft PL-300 (Power BI), or freeCodeCamp SQL. Adding even one cert significantly strengthens your profile.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="container">
+    <span class="sec-label">04 Work</span>
+    <div class="sec-heading">
+      <h2>Projects</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="proj-notice">
+      <span>⚠</span>
+      <span><strong>Action needed:</strong> Replace the <code>#</code> links below with real GitHub repo links. Even a basic repo makes a big difference to recruiters reviewing your profile.</span>
+    </div>
+    <div class="proj-list">
+      <a href="#" class="proj-card">
+        <span class="proj-num">01</span>
+        <div>
+          <div class="proj-badges">
+            <span class="pbadge pb-c">Thesis</span>
+            <span class="pbadge pb-v">Freelance · Student Client</span>
+          </div>
+          <div class="proj-title">ML-Based Physio-Behavioral Analysis with Data Logging</div>
+          <div class="proj-desc">Built a machine learning system that monitors physio-behavioral patterns in chicks using a thermal camera and multiple environment sensors. All readings are automatically structured and logged into Excel, giving farmers an early-warning record to detect at-risk chicks before losses occur.</div>
+          <div class="proj-result">Automated Excel logs replaced manual mortality tracking</div>
+          <div class="proj-tags">
+            <span class="ptag hi">Python</span><span class="ptag hi">Machine Learning</span>
+            <span class="ptag hi">Excel</span><span class="ptag hi">Data Logging</span>
+            <span class="ptag">Thermal Camera</span><span class="ptag">Embedded Systems</span>
+          </div>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </a>
+      <a href="#" class="proj-card">
+        <span class="proj-num">02</span>
+        <div>
+          <div class="proj-badges">
+            <span class="pbadge pb-c">Capstone</span>
+            <span class="pbadge pb-v">Freelance · Student Client</span>
+          </div>
+          <div class="proj-title">Automated University Scheduling System</div>
+          <div class="proj-desc">University scheduling was done manually — error-prone and time-consuming every semester. Built a constraint-based scheduling application that automatically assigns rooms, professors, and time slots while eliminating conflicts.</div>
+          <div class="proj-result">Successfully delivered and defended by the client</div>
+          <div class="proj-tags">
+            <span class="ptag hi">Python</span><span class="ptag hi">Optimization</span>
+            <span class="ptag">Database Design</span><span class="ptag">Algorithm</span>
+          </div>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </a>
+      <a href="#" class="proj-card">
+        <span class="proj-num">03</span>
+        <div>
+          <div class="proj-badges">
+            <span class="pbadge pb-c">Thesis</span>
+            <span class="pbadge pb-v">Freelance · Student Client</span>
+          </div>
+          <div class="proj-title">ML-Based Thermal Weapon Detection</div>
+          <div class="proj-desc">Built a real-time weapon detection system using thermal imaging and a custom-trained ML model. Designed for small stores that cannot afford traditional security systems — an affordable automated way to detect concealed weapons.</div>
+          <div class="proj-result">Successfully delivered and defended by the client</div>
+          <div class="proj-tags">
+            <span class="ptag hi">Python</span><span class="ptag hi">OpenCV</span>
+            <span class="ptag hi">TensorFlow</span><span class="ptag">Thermal Imaging</span>
+          </div>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section class="content-sec" id="content">
+  <div class="container">
+    <span class="sec-label">05 Online</span>
+    <div class="sec-heading">
+      <h2>Content Creation</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="content-inner">
+      <div class="content-left">
+        <p>I document my tech projects and learning journey on TikTok — covering ESP32, Arduino, mechatronics, robotics, and data analytics. Building in public and explaining things clearly.</p>
+        <div class="c-stats">
+          <div>
+            <div class="cstat-num cy">2.5K</div>
+            <div class="cstat-label">Followers</div>
+          </div>
+          <div>
+            <div class="cstat-num pk">Tech</div>
+            <div class="cstat-label">Niche</div>
+          </div>
+        </div>
+        <div class="c-topics">
+          <span class="ctopic">ESP32</span><span class="ctopic">Arduino</span>
+          <span class="ctopic">Mechatronics</span><span class="ctopic">Data Analytics</span>
+          <span class="ctopic">Robotics</span><span class="ctopic">Desk Setup</span>
+          <span class="ctopic">Programming</span><span class="ctopic">Projects</span>
+        </div>
+      </div>
+      <div>
+        <div class="c-posts">
+          <div class="c-post"><div class="c-play">🤖</div><div><div class="c-post-title">ESP32 Robotics Build</div><div class="c-post-sub">Embedded systems content</div></div></div>
+          <div class="c-post"><div class="c-play">📊</div><div><div class="c-post-title">Data Analytics Walkthrough</div><div class="c-post-sub">Python & Pandas tutorial</div></div></div>
+          <div class="c-post"><div class="c-play">⚙️</div><div><div class="c-post-title">Mechatronics Project</div><div class="c-post-sub">Arduino automation</div></div></div>
+          <div class="c-post"><div class="c-play">🖥️</div><div><div class="c-post-title">Desk Setup Tour</div><div class="c-post-sub">Developer workspace</div></div></div>
+        </div>
+        <a href="https://www.tiktok.com/@mechatrojiks" class="tiktok-link">▶ &nbsp;Visit @mechatrojiks on TikTok</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-sec" id="contact">
+  <div class="container">
+    <span class="sec-label">06 Contact</span>
+    <div class="sec-heading">
+      <h2>Let's <span style="color:var(--cyan)">Connect</span></h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-left">
+        <p>I'm open to opportunities in engineering, data, QA, or any tech role where I can contribute and keep growing. Reach out through any of the channels below.</p>
+        <div class="c-links">
+          <a href="mailto:jikogaanan@email.com" class="c-link"><span>✉ &nbsp;jikogaanan@email.com</span><span>→</span></a>
+          <a href="https://www.linkedin.com/in/jiko-gaanan/" class="c-link"><span>💼 &nbsp;LinkedIn</span><span>→</span></a>
+          <a href="https://github.com/mechatrojiks-code" class="c-link"><span>🐙 &nbsp;GitHub</span><span>→</span></a>
+          <a href="https://www.tiktok.com/@mechatrojiks" class="c-link"><span>📱 &nbsp;TikTok @mechatrojiks</span><span>→</span></a>
+        </div>
+        <a href="#" class="btn-cyan">↓ &nbsp;Download Resume</a>
+      </div>
+      <div class="cform">
+        <div><label class="clabel">Name</label><input class="cinput" type="text" placeholder="Your name"></div>
+        <div><label class="clabel">Email</label><input class="cinput" type="email" placeholder="your@email.com"></div>
+        <div><label class="clabel">Message</label><textarea class="ctextarea" placeholder="Tell me about the opportunity or just say hello..."></textarea></div>
+        <button class="btn-cyan" style="width:fit-content;">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 <span class="cy">Jiko Gaanan</span></span>
+  <span>
+    <a href="https://github.com/mechatrojiks-code">GitHub</a> &nbsp;·&nbsp;
+    <a href="https://www.linkedin.com/in/jiko-gaanan/">LinkedIn</a> &nbsp;·&nbsp;
+    <a href="https://www.tiktok.com/@mechatrojiks">TikTok</a>
+  </span>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navMenu   = document.getElementById('nav-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navMenu.classList.toggle('open');
+  });
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navMenu.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

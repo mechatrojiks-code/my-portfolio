@@ -198,23 +198,161 @@
 
   /* ABOUT */
   .about { background: var(--bg2); }
-  .about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 5rem; align-items: start; }
+  .about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 5rem; align-items: center; }
   .about-text p { font-size: 0.95rem; line-height: 1.9; color: var(--muted); margin-bottom: 1.2rem; font-weight: 300; }
   .about-text p strong { color: var(--text); font-weight: 600; }
-  .about-stack { display: flex; flex-direction: column; gap: 1px; }
-  .stack-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1rem 1.2rem; background: var(--surface); border: 1px solid var(--border);
-    transition: border-color 0.2s;
+
+  /* ─── PHOTO CARD ─── */
+  .photo-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
   }
-  .stack-item:hover { border-color: var(--cyan); }
-  .stack-name { font-size: 0.82rem; font-weight: 600; }
-  .stack-bar-wrap { width: 100px; height: 4px; background: var(--dim); border-radius: 2px; overflow: hidden; }
-  .stack-bar { height: 100%; border-radius: 2px; animation: grow 1.2s ease both; }
-  @keyframes grow { from { width: 0; } }
-  .c { background: var(--cyan); }
-  .p { background: var(--pink); }
-  .v { background: var(--purple); }
+  .photo-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  /* corner accents */
+  .photo-frame::before,
+  .photo-frame::after {
+    content: '';
+    position: absolute;
+    width: 28px; height: 28px;
+    z-index: 3;
+  }
+  .photo-frame::before {
+    top: 10px; left: 10px;
+    border-top: 2px solid var(--cyan);
+    border-left: 2px solid var(--cyan);
+  }
+  .photo-frame::after {
+    bottom: 10px; right: 10px;
+    border-bottom: 2px solid var(--pink);
+    border-right: 2px solid var(--pink);
+  }
+  .photo-corner-br { position: absolute; bottom: 10px; left: 10px; width: 28px; height: 28px; border-bottom: 2px solid var(--cyan); border-left: 2px solid var(--cyan); z-index: 3; }
+  .photo-corner-tr { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; border-top: 2px solid var(--pink); border-right: 2px solid var(--pink); z-index: 3; }
+
+  /* the placeholder — replace <img> once you have your photo */
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem;
+    background: linear-gradient(160deg, #0d0d22 0%, #13132a 60%, #1a0d2e 100%);
+    color: var(--dim);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    padding: 2rem;
+  }
+  .photo-placeholder .avatar-icon {
+    font-size: 4rem;
+    opacity: 0.3;
+  }
+  .photo-placeholder span {
+    display: block;
+    margin-top: 0.4rem;
+    color: var(--cyan);
+    opacity: 0.5;
+  }
+  /* Swap this in once you have an actual photo:
+     <img src="your-photo.jpg" alt="Jiko Gaanan" class="photo-img"> */
+  .photo-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* glow halo behind the card */
+  .photo-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(ellipse at 50% 40%, rgba(0,245,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .photo-card > * { position: relative; z-index: 1; }
+
+  /* caption badges */
+  .photo-badges {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.45rem;
+    width: 100%;
+  }
+  .pbadge {
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .pbadge.cy { background: rgba(0,245,255,0.1); border: 1px solid rgba(0,245,255,0.25); color: var(--cyan); }
+  .pbadge.pk { background: rgba(255,45,120,0.1); border: 1px solid rgba(255,45,120,0.25); color: var(--pink); }
+  .pbadge.vt { background: rgba(155,92,246,0.1); border: 1px solid rgba(155,92,246,0.25); color: var(--purple); }
+
+  /* ─── LANGUAGES / TOOLS SECTION ─── */
+  .langs-section { background: var(--bg); }
+  .langs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .lang-card {
+    background: var(--surface);
+    padding: 2rem 1.8rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: background 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .lang-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .lang-card:hover { background: var(--dim); }
+  .lang-card:hover::before { transform: scaleX(1); }
+
+  .lang-card.c::before  { background: var(--cyan);   }
+  .lang-card.p::before  { background: var(--pink);   }
+  .lang-card.v::before  { background: var(--purple); }
+  .lang-card.y::before  { background: var(--yellow); }
+  .lang-card.g::before  { background: var(--muted);  }
+
+  .lang-icon {
+    width: 44px; height: 44px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; font-weight: 800;
+    font-family: 'Fira Code', monospace;
+    flex-shrink: 0;
+  }
+  .lang-icon.c { background: rgba(0,245,255,0.1);   color: var(--cyan);   border: 1px solid rgba(0,245,255,0.2);   }
+  .lang-icon.p { background: rgba(255,45,120,0.1);  color: var(--pink);   border: 1px solid rgba(255,45,120,0.2);  }
+  .lang-icon.v { background: rgba(155,92,246,0.1);  color: var(--purple); border: 1px solid rgba(155,92,246,0.2);  }
+  .lang-icon.y { background: rgba(255,229,0,0.1);   color: var(--yellow); border: 1px solid rgba(255,229,0,0.2);   }
+  .lang-icon.g { background: rgba(192,192,224,0.08);color: var(--muted);  border: 1px solid rgba(192,192,224,0.15);}
+
+  .lang-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
+  .lang-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+  .lang-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: auto; }
+  .ltag {
+    padding: 0.18rem 0.55rem;
+    background: var(--dim); border: 1px solid var(--border);
+    border-radius: 3px; font-size: 0.6rem; color: var(--muted);
+    font-family: 'Fira Code', monospace;
+  }
 
   /* PROJECTS */
   .proj-container { display: flex; flex-direction: column; gap: 1px; }
@@ -311,9 +449,7 @@
   footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); }
   .fcy { color: var(--cyan); }
 
-  /* ============================================
-     MARQUEE / TECH STRIP
-     ============================================ */
+  /* MARQUEE */
   .marquee-section {
     padding: 0;
     border-top: 1px solid var(--border);
@@ -322,7 +458,6 @@
     overflow: hidden;
     position: relative;
   }
-  /* fade edges left & right */
   .marquee-section::before,
   .marquee-section::after {
     content: '';
@@ -331,58 +466,25 @@
   }
   .marquee-section::before { left: 0;  background: linear-gradient(to right, var(--bg2), transparent); }
   .marquee-section::after  { right: 0; background: linear-gradient(to left,  var(--bg2), transparent); }
-
-  /* each row wrapper */
-  .marquee-row {
-    padding: 0.8rem 0;
-    display: flex;
-    overflow: hidden;
-  }
-
-  /* the moving belt — duplicate content inside for seamless loop */
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: marquee-left 32s linear infinite;
-  }
-  .marquee-track.reverse {
-    animation-name: marquee-right;
-    animation-duration: 40s;
-  }
-  /* pause on hover so users can read */
+  .marquee-row { padding: 0.8rem 0; display: flex; overflow: hidden; }
+  .marquee-track { display: flex; width: max-content; animation: marquee-left 32s linear infinite; }
+  .marquee-track.reverse { animation-name: marquee-right; animation-duration: 40s; }
   .marquee-track:hover { animation-play-state: paused; }
-
   @keyframes marquee-left  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-
-  /* individual pill chips */
-  .m-chip {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.45rem 1.1rem; margin: 0 0.35rem;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 999px; font-size: 0.75rem; font-weight: 600;
-    color: var(--muted); white-space: nowrap;
-    transition: border-color 0.2s, color 0.2s; cursor: default;
-  }
+  .m-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 1.1rem; margin: 0 0.35rem; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; font-size: 0.75rem; font-weight: 600; color: var(--muted); white-space: nowrap; transition: border-color 0.2s, color 0.2s; cursor: default; }
   .m-chip:hover { border-color: var(--cyan); color: var(--cyan); }
-
-  /* accent variants */
   .m-chip.accent-c { border-color: rgba(0,245,255,0.25);  color: var(--cyan);   }
   .m-chip.accent-p { border-color: rgba(255,45,120,0.25); color: var(--pink);   }
   .m-chip.accent-v { border-color: rgba(155,92,246,0.25); color: var(--purple); }
   .m-chip.accent-y { border-color: rgba(255,229,0,0.25);  color: var(--yellow); }
-
-  /* colored dot inside each chip */
   .m-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .m-dot.c { background: var(--cyan);   }
   .m-dot.p { background: var(--pink);   }
   .m-dot.v { background: var(--purple); }
   .m-dot.y { background: var(--yellow); }
   .m-dot.g { background: var(--muted);  }
-
-  /* divider star between repeated sets */
   .m-sep { color: var(--dim); margin: 0 0.8rem; font-size: 0.65rem; align-self: center; }
-  /* ============================================ */
 
   /* ENTRY ANIMATIONS */
   @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
@@ -400,23 +502,20 @@
     .tiktok-card { display: none; }
     section { padding: 4rem 1.5rem; }
     .about-grid, .tiktok-big, .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-grid { gap: 3rem; }
     .proj { grid-template-columns: auto 1fr; }
     .proj-arrow { display: none; }
     footer { flex-direction: column; gap: 0.5rem; padding: 1.5rem; }
+    .langs-grid { grid-template-columns: repeat(2, 1fr); }
     #resume .inner > div { grid-template-columns: 1fr; }
+    .photo-frame { max-width: 300px; margin: 0 auto; }
   }
 
   /* MOBILE */
   @media (max-width: 600px) {
     nav { padding: 1rem; }
     .nav-inner { position: relative; }
-    nav ul {
-      display: none; flex-direction: column;
-      position: absolute; top: 100%; left: -1rem; right: -1rem;
-      background: rgba(8,8,16,0.98); backdrop-filter: blur(20px);
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      padding: 1rem 0; gap: 0; z-index: 999;
-    }
+    nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: -1rem; right: -1rem; background: rgba(8,8,16,0.98); backdrop-filter: blur(20px); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; gap: 0; z-index: 999; }
     nav ul.open { display: flex; }
     nav ul li a { display: block; padding: 0.85rem 1.5rem; font-size: 0.9rem; border-bottom: 1px solid var(--border); }
     nav ul li:last-child a { border-bottom: none; }
@@ -434,7 +533,7 @@
     section { padding: 3rem 1.2rem; }
     .sec-title { font-size: 2rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .stack-bar-wrap { width: 80px; }
+    .langs-grid { grid-template-columns: 1fr; }
     .proj { grid-template-columns: 1fr; padding: 1.5rem; gap: 1rem; }
     .proj-n { font-size: 1.3rem; }
     .proj-name { font-size: 1rem; }
@@ -446,9 +545,9 @@
     .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
     .contact-left h2 { font-size: 2.5rem; }
     footer { flex-direction: column; gap: 0.4rem; padding: 1.2rem; text-align: center; }
-    /* marquee fade narrower on mobile */
     .marquee-section::before,
     .marquee-section::after { width: 40px; }
+    .lang-card { padding: 1.5rem; }
   }
 </style>
 </head>
@@ -521,23 +620,13 @@
       </div>
       <a href="https://www.tiktok.com/@mechatrojiks" class="tiktok-cta">▶ Visit Channel</a>
     </div>
-  </div><!-- end hero-inner -->
+  </div>
 </section>
 
-<!-- ============================================
-     TECH STACK MARQUEE
-     Sits between the Hero and About sections.
-     Row 1 scrolls LEFT  (tools & languages)
-     Row 2 scrolls RIGHT (skills & concepts)
-     Each row's content is duplicated so the
-     loop is perfectly seamless.
-     ============================================ -->
+<!-- MARQUEE -->
 <div class="marquee-section">
-
-  <!-- ROW 1 — scrolls left -->
   <div class="marquee-row">
     <div class="marquee-track">
-      <!-- ── SET 1 ── -->
       <span class="m-chip accent-c"><span class="m-dot c"></span>Python</span>
       <span class="m-chip accent-c"><span class="m-dot c"></span>Pandas</span>
       <span class="m-chip accent-c"><span class="m-dot c"></span>NumPy</span>
@@ -556,7 +645,6 @@
       <span class="m-chip accent-y"><span class="m-dot y"></span>Jupyter</span>
       <span class="m-chip accent-p"><span class="m-dot p"></span>Google Sheets</span>
       <span class="m-sep">✦</span>
-      <!-- ── SET 2 (exact duplicate for seamless loop) ── -->
       <span class="m-chip accent-c"><span class="m-dot c"></span>Python</span>
       <span class="m-chip accent-c"><span class="m-dot c"></span>Pandas</span>
       <span class="m-chip accent-c"><span class="m-dot c"></span>NumPy</span>
@@ -577,11 +665,8 @@
       <span class="m-sep">✦</span>
     </div>
   </div>
-
-  <!-- ROW 2 — scrolls right (add class "reverse") -->
   <div class="marquee-row">
     <div class="marquee-track reverse">
-      <!-- ── SET 1 ── -->
       <span class="m-chip accent-y"><span class="m-dot y"></span>Data Wrangling</span>
       <span class="m-chip accent-c"><span class="m-dot c"></span>EDA</span>
       <span class="m-chip accent-v"><span class="m-dot v"></span>Machine Learning</span>
@@ -597,7 +682,6 @@
       <span class="m-chip accent-v"><span class="m-dot v"></span>ETL</span>
       <span class="m-chip accent-p"><span class="m-dot p"></span>Mechatronics</span>
       <span class="m-sep">✦</span>
-      <!-- ── SET 2 (exact duplicate for seamless loop) ── -->
       <span class="m-chip accent-y"><span class="m-dot y"></span>Data Wrangling</span>
       <span class="m-chip accent-c"><span class="m-dot c"></span>EDA</span>
       <span class="m-chip accent-v"><span class="m-dot v"></span>Machine Learning</span>
@@ -615,215 +699,325 @@
       <span class="m-sep">✦</span>
     </div>
   </div>
-
 </div>
-<!-- ============================================ -->
 
-<!-- ABOUT -->
+<!-- ABOUT — now with photo instead of skill bars -->
 <section class="about" id="about">
   <div class="inner">
-  <div class="sec-row">
-    <span class="sec-num">// 01</span>
-    <h2 class="sec-title">About</h2>
-    <div class="sec-hr"></div>
-  </div>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>I'm a <strong>test engineer transitioning into data analytics</strong>, with 1–2 years of hands-on experience collecting and analyzing real production data. I know how data gets collected, what breaks it, and how to make it useful.</p>
-      <p>My background includes writing SQL queries to extract test results, building Excel reports for engineering teams, and using Python to automate repetitive data tasks. My ML projects — including <strong>thermal weapon detection using computer vision</strong> — gave me deep experience wrangling and analyzing real sensor datasets.</p>
-      <p>Outside of work, I create <strong>tech content across YouTube, TikTok, Instagram, and Facebook</strong> covering ESP32, Arduino, mechatronics, and data projects — because being able to explain technical things clearly is half the job.</p>
+    <div class="sec-row">
+      <span class="sec-num">// 01</span>
+      <h2 class="sec-title">About</h2>
+      <div class="sec-hr"></div>
     </div>
-    <div class="about-stack">
-      <div class="stack-item">
-        <span class="stack-name">Python</span>
-        <div class="stack-bar-wrap"><div class="stack-bar c" style="width:65%"></div></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>test engineer transitioning into data analytics</strong>, with 1–2 years of hands-on experience collecting and analyzing real production data. I know how data gets collected, what breaks it, and how to make it useful.</p>
+        <p>My background includes writing SQL queries to extract test results, building Excel reports for engineering teams, and using Python to automate repetitive data tasks. My ML projects — including <strong>thermal weapon detection using computer vision</strong> — gave me deep experience wrangling and analyzing real sensor datasets.</p>
+        <p>Outside of work, I create <strong>tech content across YouTube, TikTok, Instagram, and Facebook</strong> covering ESP32, Arduino, mechatronics, and data projects — because being able to explain technical things clearly is half the job.</p>
       </div>
-      <div class="stack-item">
-        <span class="stack-name">SQL</span>
-        <div class="stack-bar-wrap"><div class="stack-bar c" style="width:60%;animation-delay:0.1s"></div></div>
-      </div>
-      <div class="stack-item">
-        <span class="stack-name">Excel</span>
-        <div class="stack-bar-wrap"><div class="stack-bar p" style="width:72%;animation-delay:0.2s"></div></div>
-      </div>
-      <div class="stack-item">
-        <span class="stack-name">Machine Learning</span>
-        <div class="stack-bar-wrap"><div class="stack-bar v" style="width:55%;animation-delay:0.3s"></div></div>
-      </div>
-      <div class="stack-item">
-        <span class="stack-name">Embedded Systems</span>
-        <div class="stack-bar-wrap"><div class="stack-bar c" style="width:68%;animation-delay:0.4s"></div></div>
-      </div>
-      <div class="stack-item">
-        <span class="stack-name">Data Analysis</span>
-        <div class="stack-bar-wrap"><div class="stack-bar v" style="width:63%;animation-delay:0.5s"></div></div>
+
+      <!-- PHOTO replaces skill bars -->
+      <div class="photo-card">
+        <div class="photo-glow"></div>
+        <div class="photo-frame">
+          <div class="photo-corner-br"></div>
+          <div class="photo-corner-tr"></div>
+          <img src="me.jpeg" alt="Jiko Gaanan" class="photo-img">
+          <div class="photo-corner-br"></div>
+          <div class="photo-corner-tr"></div>
+          <!--
+            ══════════════════════════════════════════
+            TO ADD YOUR PHOTO:
+            Replace the <div class="photo-placeholder"> block below with:
+            <img src="your-photo.jpg" alt="Jiko Gaanan" class="photo-img">
+            ══════════════════════════════════════════
+          -->
+          <div class="photo-placeholder">
+            <span class="avatar-icon">👤</span>
+            <span>your photo here</span>
+            <span style="color:var(--muted); opacity:0.4; font-size:0.6rem; margin-top:0.2rem;">replace with &lt;img&gt; tag</span>
+          </div>
+        </div>
+        <div class="photo-badges">
+          <span class="pbadge cy">Data Analyst</span>
+          <span class="pbadge pk">Creator</span>
+          <span class="pbadge vt">Engineer</span>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects">
+<!-- ═══════════════════════════════════════════════════
+     LANGUAGES & TOOLS — new dedicated section
+     ═══════════════════════════════════════════════════ -->
+<section class="langs-section" id="languages">
   <div class="inner">
-  <div class="sec-row">
-    <span class="sec-num">// 02</span>
-    <h2 class="sec-title">Projects</h2>
-    <div class="sec-hr"></div>
+    <div class="sec-row">
+      <span class="sec-num">// 02</span>
+      <h2 class="sec-title">Languages &amp; Tools</h2>
+      <div class="sec-hr"></div>
+    </div>
+
+    <div class="langs-grid">
+
+      <!-- Python -->
+      <div class="lang-card c">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="lang-icon c">Py</div>
+          <div class="lang-name">Python</div>
+        </div>
+        <div class="lang-desc">Primary language for data wrangling, automation, ML pipelines, and scripting. Used daily to clean messy datasets and build reproducible analyses.</div>
+        <div class="lang-tags">
+          <span class="ltag">Pandas</span>
+          <span class="ltag">NumPy</span>
+          <span class="ltag">Matplotlib</span>
+          <span class="ltag">Seaborn</span>
+          <span class="ltag">Jupyter</span>
+        </div>
+      </div>
+
+      <!-- SQL -->
+      <div class="lang-card v">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="lang-icon v">SQL</div>
+          <div class="lang-name">SQL</div>
+        </div>
+        <div class="lang-desc">Used to extract and analyze test result data from production databases. Comfortable writing joins, aggregations, and subqueries to surface defect patterns.</div>
+        <div class="lang-tags">
+          <span class="ltag">PostgreSQL</span>
+          <span class="ltag">Joins</span>
+          <span class="ltag">Aggregations</span>
+          <span class="ltag">Subqueries</span>
+        </div>
+      </div>
+
+      <!-- Excel -->
+      <div class="lang-card y">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="lang-icon y">XL</div>
+          <div class="lang-name">Excel</div>
+        </div>
+        <div class="lang-desc">Built structured reports and data logs for engineering teams. Used pivot tables, formulas, and conditional formatting to make findings readable at a glance.</div>
+        <div class="lang-tags">
+          <span class="ltag">Pivot Tables</span>
+          <span class="ltag">VLOOKUP</span>
+          <span class="ltag">Data Logging</span>
+          <span class="ltag">Dashboards</span>
+        </div>
+      </div>
+
+      <!-- Machine Learning -->
+      <div class="lang-card p">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="lang-icon p">ML</div>
+          <div class="lang-name">Machine Learning</div>
+        </div>
+        <div class="lang-desc">Trained and deployed models for computer vision tasks. Applied to thermal imaging, behavioral pattern recognition, and sensor-based classification in real projects.</div>
+        <div class="lang-tags">
+          <span class="ltag">TensorFlow</span>
+          <span class="ltag">Scikit-learn</span>
+          <span class="ltag">OpenCV</span>
+          <span class="ltag">Computer Vision</span>
+        </div>
+      </div>
+
+      <!-- Embedded Systems -->
+      <div class="lang-card c">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="lang-icon c">C++</div>
+          <div class="lang-name">Embedded / C++</div>
+        </div>
+        <div class="lang-desc">Programmed microcontrollers for IoT and automation projects. Hands-on experience building sensor nodes that generate the data I later analyze.</div>
+        <div class="lang-tags">
+          <span class="ltag">Arduino</span>
+          <span class="ltag">ESP32</span>
+          <span class="ltag">C++</span>
+          <span class="ltag">Sensors</span>
+          <span class="ltag">IoT</span>
+        </div>
+      </div>
+
+      <!-- Dev Tools -->
+      <div class="lang-card g">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="lang-icon g">⚙</div>
+          <div class="lang-name">Dev Tools</div>
+        </div>
+        <div class="lang-desc">Keeps projects organized and reproducible. Version-controlled all personal and freelance projects, with notebooks shared via GitHub for easy review.</div>
+        <div class="lang-tags">
+          <span class="ltag">Git</span>
+          <span class="ltag">GitHub</span>
+          <span class="ltag">Jupyter</span>
+          <span class="ltag">VS Code</span>
+          <span class="ltag">Google Sheets</span>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <div class="proj-container">
-    <a href="#" class="proj">
-      <span class="proj-n">01</span>
-      <div class="proj-body">
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
-          <span class="proj-status status-done">Thesis Project</span>
-          <span class="proj-status status-freelance">Freelance · Student Client</span>
+</section>
+<!-- ═══════════════════════════════════════════════════ -->
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--bg2);">
+  <div class="inner">
+    <div class="sec-row">
+      <span class="sec-num">// 03</span>
+      <h2 class="sec-title">Projects</h2>
+      <div class="sec-hr"></div>
+    </div>
+    <div class="proj-container">
+      <a href="#" class="proj">
+        <span class="proj-n">01</span>
+        <div class="proj-body">
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+            <span class="proj-status status-done">Thesis Project</span>
+            <span class="proj-status status-freelance">Freelance · Student Client</span>
+          </div>
+          <div class="proj-name">ML-Based Physio-Behavioral Analysis with Data Logging</div>
+          <div class="proj-desc">High chick mortality rates are often caused by undetected early stress or illness. Built an ML system that monitors physio-behavioral patterns using multiple environment sensors — including a <strong style="color:var(--cyan);">thermal camera</strong> to track body temperature, alongside other sensors measuring surrounding conditions. All readings are automatically logged and structured in <strong style="color:var(--cyan);">Excel</strong>, giving farmers a clear data record to detect at-risk chicks early and act before losses occur.</div>
+          <div class="proj-tags">
+            <span class="ptag hi">Python</span>
+            <span class="ptag hi">Machine Learning</span>
+            <span class="ptag hi">Excel</span>
+            <span class="ptag hi">Data Logging</span>
+            <span class="ptag">Thermal Camera</span>
+            <span class="ptag">Multi-Sensor</span>
+            <span class="ptag">Behavioral Analysis</span>
+            <span class="ptag">Embedded Systems</span>
+          </div>
+          <div class="proj-result">Automated Excel logs replaced manual mortality tracking</div>
         </div>
-        <div class="proj-name">ML-Based Physio-Behavioral Analysis with Data Logging</div>
-        <div class="proj-desc">High chick mortality rates are often caused by undetected early stress or illness. Built an ML system that monitors physio-behavioral patterns using multiple environment sensors — including a <strong style="color:var(--cyan);">thermal camera</strong> to track body temperature, alongside other sensors measuring surrounding conditions. All readings are automatically logged and structured in <strong style="color:var(--cyan);">Excel</strong>, giving farmers a clear data record to detect at-risk chicks early and act before losses occur.</div>
-        <div class="proj-tags">
-          <span class="ptag hi">Python</span>
-          <span class="ptag hi">Machine Learning</span>
-          <span class="ptag hi">Excel</span>
-          <span class="ptag hi">Data Logging</span>
-          <span class="ptag">Thermal Camera</span>
-          <span class="ptag">Multi-Sensor</span>
-          <span class="ptag">Behavioral Analysis</span>
-          <span class="ptag">Embedded Systems</span>
+        <span class="proj-arrow">↗</span>
+      </a>
+      <a href="#" class="proj">
+        <span class="proj-n">02</span>
+        <div class="proj-body">
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+            <span class="proj-status status-done">Capstone Project</span>
+            <span class="proj-status status-freelance">Freelance · Student Client</span>
+          </div>
+          <div class="proj-name">Automated University Scheduling System</div>
+          <div class="proj-desc">University scheduling was done manually — a slow, error-prone process that wasted staff time every semester. Built an intelligent scheduling application that automatically assigns rooms, professors, and time slots using constraint-based optimization, eliminating conflicts and cutting planning time significantly.</div>
+          <div class="proj-tags">
+            <span class="ptag hi">Python</span>
+            <span class="ptag hi">Optimization</span>
+            <span class="ptag">Database Design</span>
+            <span class="ptag">Algorithm</span>
+            <span class="ptag">UI/UX</span>
+          </div>
+          <div class="proj-result">Delivered and defended successfully by the client</div>
         </div>
-        <div class="proj-result">Automated Excel logs replaced manual mortality tracking</div>
-      </div>
-      <span class="proj-arrow">↗</span>
-    </a>
-    <a href="#" class="proj">
-      <span class="proj-n">02</span>
-      <div class="proj-body">
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
-          <span class="proj-status status-done">Capstone Project</span>
-          <span class="proj-status status-freelance">Freelance · Student Client</span>
+        <span class="proj-arrow">↗</span>
+      </a>
+      <a href="#" class="proj">
+        <span class="proj-n">03</span>
+        <div class="proj-body">
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+            <span class="proj-status status-done">Thesis Project</span>
+            <span class="proj-status status-freelance">Freelance · Student Client</span>
+          </div>
+          <div class="proj-name">ML-Based Thermal Weapon Detection</div>
+          <div class="proj-desc">Small sari-sari stores are easy targets for theft but can't afford traditional security systems. Built a real-time weapon detection system using thermal imaging and a custom-trained ML model — giving small store owners an affordable, automated way to detect concealed weapons before incidents happen.</div>
+          <div class="proj-tags">
+            <span class="ptag hi">Python</span>
+            <span class="ptag hi">OpenCV</span>
+            <span class="ptag hi">Machine Learning</span>
+            <span class="ptag">TensorFlow</span>
+            <span class="ptag">Thermal Imaging</span>
+          </div>
+          <div class="proj-result">Delivered and defended successfully by the client</div>
         </div>
-        <div class="proj-name">Automated University Scheduling System</div>
-        <div class="proj-desc">University scheduling was done manually — a slow, error-prone process that wasted staff time every semester. Built an intelligent scheduling application that automatically assigns rooms, professors, and time slots using constraint-based optimization, eliminating conflicts and cutting planning time significantly.</div>
-        <div class="proj-tags">
-          <span class="ptag hi">Python</span>
-          <span class="ptag hi">Optimization</span>
-          <span class="ptag">Database Design</span>
-          <span class="ptag">Algorithm</span>
-          <span class="ptag">UI/UX</span>
-        </div>
-        <div class="proj-result">Delivered and defended successfully by the client</div>
-      </div>
-      <span class="proj-arrow">↗</span>
-    </a>
-    <a href="#" class="proj">
-      <span class="proj-n">03</span>
-      <div class="proj-body">
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
-          <span class="proj-status status-done">Thesis Project</span>
-          <span class="proj-status status-freelance">Freelance · Student Client</span>
-        </div>
-        <div class="proj-name">ML-Based Thermal Weapon Detection</div>
-        <div class="proj-desc">Small sari-sari stores are easy targets for theft but can't afford traditional security systems. Built a real-time weapon detection system using thermal imaging and a custom-trained ML model — giving small store owners an affordable, automated way to detect concealed weapons before incidents happen.</div>
-        <div class="proj-tags">
-          <span class="ptag hi">Python</span>
-          <span class="ptag hi">OpenCV</span>
-          <span class="ptag hi">Machine Learning</span>
-          <span class="ptag">TensorFlow</span>
-          <span class="ptag">Thermal Imaging</span>
-        </div>
-        <div class="proj-result">Delivered and defended successfully by the client</div>
-      </div>
-      <span class="proj-arrow">↗</span>
-    </a>
-  </div>
+        <span class="proj-arrow">↗</span>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- TIKTOK SECTION -->
 <section class="tiktok-section" id="tiktok">
   <div class="inner">
-  <div class="sec-row">
-    <span class="sec-num">// 03</span>
-    <h2 class="sec-title">Content</h2>
-    <div class="sec-hr"></div>
-  </div>
-  <div class="tiktok-big">
-    <div class="tiktok-big-left">
-      <h3>Building in<br><span>public.</span></h3>
-      <p>I document my journey through tech on TikTok — from ESP32 builds and Arduino projects to mechatronics, desk setups, and data analytics. Real projects, real learning, real community.</p>
-      <div class="tik-stats-row">
-        <div class="tik-big-stat">
-          <div class="tik-big-num cy">2.5K</div>
-          <div class="tik-big-label">Followers</div>
+    <div class="sec-row">
+      <span class="sec-num">// 04</span>
+      <h2 class="sec-title">Content</h2>
+      <div class="sec-hr"></div>
+    </div>
+    <div class="tiktok-big">
+      <div class="tiktok-big-left">
+        <h3>Building in<br><span>public.</span></h3>
+        <p>I document my journey through tech on TikTok — from ESP32 builds and Arduino projects to mechatronics, desk setups, and data analytics. Real projects, real learning, real community.</p>
+        <div class="tik-stats-row">
+          <div class="tik-big-stat">
+            <div class="tik-big-num cy">2.5K</div>
+            <div class="tik-big-label">Followers</div>
+          </div>
+          <div class="tik-big-stat">
+            <div class="tik-big-num pk">Tech</div>
+            <div class="tik-big-label">Niche</div>
+          </div>
         </div>
-        <div class="tik-big-stat">
-          <div class="tik-big-num pk">Tech</div>
-          <div class="tik-big-label">Niche</div>
+        <div class="tiktok-topics-big">
+          <span class="ttopic">ESP32</span>
+          <span class="ttopic">Arduino</span>
+          <span class="ttopic">Mechatronics</span>
+          <span class="ttopic">Data Analytics</span>
+          <span class="ttopic">Robotics</span>
+          <span class="ttopic">Desk Setup</span>
+          <span class="ttopic">Programming</span>
+          <span class="ttopic">Projects</span>
         </div>
       </div>
-      <div class="tiktok-topics-big">
-        <span class="ttopic">ESP32</span>
-        <span class="ttopic">Arduino</span>
-        <span class="ttopic">Mechatronics</span>
-        <span class="ttopic">Data Analytics</span>
-        <span class="ttopic">Robotics</span>
-        <span class="ttopic">Desk Setup</span>
-        <span class="ttopic">Programming</span>
-        <span class="ttopic">Projects</span>
+      <div class="tiktok-big-right">
+        <div class="tik-post">
+          <div class="tik-play">🤖</div>
+          <div class="tik-post-info">
+            <div class="tik-post-title">ESP32 Robotics Build</div>
+            <div class="tik-post-views">Embedded systems content</div>
+          </div>
+          <span class="tik-heart">♥</span>
+        </div>
+        <div class="tik-post">
+          <div class="tik-play">📊</div>
+          <div class="tik-post-info">
+            <div class="tik-post-title">Data Analytics Walkthrough</div>
+            <div class="tik-post-views">Python & pandas tutorial</div>
+          </div>
+          <span class="tik-heart">♥</span>
+        </div>
+        <div class="tik-post">
+          <div class="tik-play">🖥️</div>
+          <div class="tik-post-info">
+            <div class="tik-post-title">Desk Setup Tour</div>
+            <div class="tik-post-views">Developer workspace</div>
+          </div>
+          <span class="tik-heart">♥</span>
+        </div>
+        <div class="tik-post">
+          <div class="tik-play">⚙️</div>
+          <div class="tik-post-info">
+            <div class="tik-post-title">Mechatronics Project</div>
+            <div class="tik-post-views">Arduino automation</div>
+          </div>
+          <span class="tik-heart">♥</span>
+        </div>
+        <a href="https://www.tiktok.com/@mechatrojiks" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.9rem;background:linear-gradient(90deg,rgba(0,245,255,0.1),rgba(255,45,120,0.1));border:1px solid rgba(0,245,255,0.2);border-radius:6px;text-decoration:none;color:var(--cyan);font-size:0.78rem;font-weight:600;transition:all 0.2s;">
+          ▶ See All Videos on TikTok
+        </a>
       </div>
     </div>
-    <div class="tiktok-big-right">
-      <div class="tik-post">
-        <div class="tik-play">🤖</div>
-        <div class="tik-post-info">
-          <div class="tik-post-title">ESP32 Robotics Build</div>
-          <div class="tik-post-views">Embedded systems content</div>
-        </div>
-        <span class="tik-heart">♥</span>
-      </div>
-      <div class="tik-post">
-        <div class="tik-play">📊</div>
-        <div class="tik-post-info">
-          <div class="tik-post-title">Data Analytics Walkthrough</div>
-          <div class="tik-post-views">Python & pandas tutorial</div>
-        </div>
-        <span class="tik-heart">♥</span>
-      </div>
-      <div class="tik-post">
-        <div class="tik-play">🖥️</div>
-        <div class="tik-post-info">
-          <div class="tik-post-title">Desk Setup Tour</div>
-          <div class="tik-post-views">Developer workspace</div>
-        </div>
-        <span class="tik-heart">♥</span>
-      </div>
-      <div class="tik-post">
-        <div class="tik-play">⚙️</div>
-        <div class="tik-post-info">
-          <div class="tik-post-title">Mechatronics Project</div>
-          <div class="tik-post-views">Arduino automation</div>
-        </div>
-        <span class="tik-heart">♥</span>
-      </div>
-      <a href="https://www.tiktok.com/@mechatrojiks" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.9rem;background:linear-gradient(90deg,rgba(0,245,255,0.1),rgba(255,45,120,0.1));border:1px solid rgba(0,245,255,0.2);border-radius:6px;text-decoration:none;color:var(--cyan);font-size:0.78rem;font-weight:600;transition:all 0.2s;">
-        ▶ See All Videos on TikTok
-      </a>
-    </div>
-  </div>
   </div>
 </section>
 
 <!-- RESUME -->
-<section id="resume" style="background: var(--bg2);">
+<section id="resume" style="background: var(--bg);">
   <div class="inner">
     <div class="sec-row">
-      <span class="sec-num">// 04</span>
+      <span class="sec-num">// 05</span>
       <h2 class="sec-title">Resume</h2>
       <div class="sec-hr"></div>
     </div>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-
-      <!-- Experience -->
       <div>
         <p style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--cyan); margin-bottom:1.5rem; font-family:'Fira Code',monospace;">Experience</p>
         <div style="display:flex; flex-direction:column; gap:1px;">
@@ -842,8 +1036,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Education & Skills -->
       <div style="display:flex; flex-direction:column; gap:2rem;">
         <div>
           <p style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--cyan); margin-bottom:1.5rem; font-family:'Fira Code',monospace;">Education</p>
@@ -855,7 +1047,6 @@
             <div style="font-size:0.75rem; color:var(--pink);">Batangas State University - TNEU</div>
           </div>
         </div>
-
         <div>
           <p style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--cyan); margin-bottom:1.5rem; font-family:'Fira Code',monospace;">Tools & Technologies</p>
           <div style="background:var(--surface); border:1px solid var(--border); padding:1.5rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
@@ -872,10 +1063,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
-    <!-- Download button -->
     <div style="margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
       <p style="font-size:0.85rem; color:var(--muted);">Want the full version? Download my resume as a PDF.</p>
       <a href="#" class="btn-cyan" style="display:inline-flex; align-items:center; gap:0.5rem;">↓ Download Resume</a>
@@ -886,29 +1074,29 @@
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="inner">
-  <div class="sec-row">
-    <span class="sec-num">// 05</span>
-    <h2 class="sec-title">Contact</h2>
-    <div class="sec-hr"></div>
-  </div>
-  <div class="contact-wrap">
-    <div class="contact-left">
-      <h2>Let's<br><span class="cy">connect.</span></h2>
-      <p>Looking for remote <strong>data analyst roles</strong>. I bring real engineering data experience, Python/SQL skills, and the ability to communicate findings clearly. Let's work together.</p>
-      <div class="clinks">
-        <a href="mailto:jikogaanan@email.com" class="clink"><span>✉ jikogaanan@email.com</span><span>→</span></a>
-        <a href="https://www.linkedin.com/in/jiko-gaanan/" class="clink"><span>in LinkedIn</span><span>→</span></a>
-        <a href="https://github.com/mechatrojiks-code" class="clink"><span>⌥ GitHub</span><span>→</span></a>
-        <a href="https://www.tiktok.com/@mechatrojiks" class="clink"><span>📱 TikTok @mechatrojiks</span><span>→</span></a>
+    <div class="sec-row">
+      <span class="sec-num">// 06</span>
+      <h2 class="sec-title">Contact</h2>
+      <div class="sec-hr"></div>
+    </div>
+    <div class="contact-wrap">
+      <div class="contact-left">
+        <h2>Let's<br><span class="cy">connect.</span></h2>
+        <p>Looking for remote <strong>data analyst roles</strong>. I bring real engineering data experience, Python/SQL skills, and the ability to communicate findings clearly. Let's work together.</p>
+        <div class="clinks">
+          <a href="mailto:jikogaanan@email.com" class="clink"><span>✉ jikogaanan@email.com</span><span>→</span></a>
+          <a href="https://www.linkedin.com/in/jiko-gaanan/" class="clink"><span>in LinkedIn</span><span>→</span></a>
+          <a href="https://github.com/mechatrojiks-code" class="clink"><span>⌥ GitHub</span><span>→</span></a>
+          <a href="https://www.tiktok.com/@mechatrojiks" class="clink"><span>📱 TikTok @mechatrojiks</span><span>→</span></a>
+        </div>
+      </div>
+      <div class="cform">
+        <div><label class="cflabel">Name</label><input class="cfinput" placeholder="Your name"></div>
+        <div><label class="cflabel">Email</label><input class="cfinput" placeholder="your@email.com"></div>
+        <div><label class="cflabel">Message</label><textarea class="cftextarea" placeholder="Tell me about the opportunity..."></textarea></div>
+        <button class="btn-cyan" style="width:fit-content">Send Message</button>
       </div>
     </div>
-    <div class="cform">
-      <div><label class="cflabel">Name</label><input class="cfinput" placeholder="Your name"></div>
-      <div><label class="cflabel">Email</label><input class="cfinput" placeholder="your@email.com"></div>
-      <div><label class="cflabel">Message</label><textarea class="cftextarea" placeholder="Tell me about the opportunity..."></textarea></div>
-      <button class="btn-cyan" style="width:fit-content">Send Message</button>
-    </div>
-  </div>
   </div>
 </section>
 
