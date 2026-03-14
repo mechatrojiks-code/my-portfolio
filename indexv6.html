@@ -176,7 +176,7 @@
   .corner-tr { position:absolute; top:10px; right:10px; width:26px; height:26px; border-top:2px solid var(--pink); border-right:2px solid var(--pink); z-index:3; }
 
   .hero-card-footer {
-    padding:0.75rem 3.6rem; position:relative; z-index:2;
+    padding:1rem 1.2rem; position:relative; z-index:2;
     display:flex; justify-content:space-between; align-items:center;
     border-top:1px solid var(--border);
   }
@@ -190,7 +190,7 @@
   .hb-v { background:rgba(155,92,246,0.1); border:1px solid rgba(155,92,246,0.25); color:var(--purple); }
 
   .hero-stats {
-    display:flex; gap:1.5rem; padding:0.75rem 3.6rem;
+    display:flex; gap:1.5rem; padding:1rem 1.2rem;
     border-top:1px solid var(--border); position:relative; z-index:2;
     background:rgba(0,0,0,0.15);
   }
@@ -199,7 +199,7 @@
   .hstat-label { font-size:0.58rem; color:var(--faint); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem; }
 
   /* ── ABOUT ── */
-  .about { background:var(--bg2); }
+  .about { background:rgba(13,13,24,0.92); }
   .about-grid { display:grid; grid-template-columns:3fr 2fr; gap:4rem; align-items:start; }
   .about-cards { display:flex; flex-direction:column; gap:2px; }
   .about-card {
@@ -217,7 +217,7 @@
   .ac-sub   { font-size:0.72rem; color:var(--faint); }
 
   /* ── SKILLS ── */
-  .skills { background:var(--bg); }
+  .skills { background:rgba(8,8,16,0.88); }
   .skills-grid {
     display:grid; grid-template-columns:repeat(3,1fr);
     gap:1px; background:var(--border);
@@ -263,7 +263,7 @@
   }
 
   /* ── EXPERIENCE ── */
-  .experience { background:var(--bg2); }
+  .experience { background:rgba(13,13,24,0.92); }
   .exp-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
   .exp-col-label {
     font-family:'Fira Code', monospace;
@@ -298,7 +298,7 @@
   .exp-tip strong { color:var(--yellow); }
 
   /* ── PROJECTS ── */
-  .projects { background:var(--bg); }
+  .projects { background:rgba(8,8,16,0.88); }
   .proj-notice {
     display:flex; gap:0.7rem; align-items:flex-start;
     padding:1rem 1.2rem; margin-bottom:1.5rem;
@@ -351,7 +351,7 @@
   .proj-card:hover .proj-arrow { transform:translate(4px,-4px); color:var(--cyan); }
 
   /* ── CONTENT ── */
-  .content-sec { background:var(--bg2); }
+  .content-sec { background:rgba(13,13,24,0.92); }
   .content-inner { display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:start; }
   .content-left h2 { margin-bottom:1rem; }
   .content-left p { margin-bottom:1.5rem; }
@@ -389,7 +389,7 @@
   .tiktok-link:hover { background:rgba(0,245,255,0.15); }
 
   /* ── CONTACT ── */
-  .contact-sec { background:var(--bg); }
+  .contact-sec { background:rgba(8,8,16,0.88); }
   .contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
   .contact-left h2 { margin-bottom:1rem; }
   .contact-left h2 span { color:var(--cyan); }
@@ -425,6 +425,7 @@
     border-top:1px solid var(--border); padding:1.6rem 2.5rem;
     display:flex; justify-content:space-between; align-items:center;
     font-size:0.72rem; color:var(--faint);
+    background:rgba(8,8,16,0.88);
   }
   footer .cy { color:var(--cyan); }
   footer a { color:var(--faint); text-decoration:none; transition:color 0.2s; }
@@ -433,7 +434,7 @@
   /* ── MARQUEE ── */
   .marquee-wrap {
     border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-    background:var(--bg2); overflow:hidden; position:relative;
+    background:rgba(13,13,24,0.92); overflow:hidden; position:relative;
   }
   .marquee-wrap::before,
   .marquee-wrap::after {
@@ -536,16 +537,18 @@
   <div class="container">
     <div class="hero-inner">
       <div class="hero-left">
-        <div class="hero-badge"><span class="pulse"></span> Open to Work</div>
+        <div class="hero-badge"><span class="pulse"></span> Open to Work — Data Analyst · Junior Level</div>
         <h1>
-          Engineer.<br>
-          <span class="cy">Analyst.</span><br>
-          <span class="pk">Creator.</span>
+          Real Data.<br>
+          <span class="cy">Real Domain.</span><br>
+          <span class="pk">Ready to Go.</span>
         </h1>
         <p class="hero-desc">
-          I'm a passionate Mechatronics Engineer with hands-on experience
-          in test engineering, data analysis, and machine learning. I build real systems,
-          analyze real data, and explain technical things clearly.
+          I'm <strong>Jiko Gaanan</strong> — a Test Engineer in electronics manufacturing
+          who works with production data daily. I pull test results with <strong>SQL</strong>,
+          automate hardware workflows with <strong>Python</strong>, and built the
+          defect traceability system my team uses. I'm actively transitioning into
+          data analytics and I bring domain knowledge most analysts don't have.
         </p>
         <div class="hero-actions">
           <a href="#projects" class="btn-cyan">View My Work</a>
@@ -558,28 +561,28 @@
         <div class="photo-frame">
           <div class="corner-bl"></div>
           <div class="corner-tr"></div>
-          <img src="jD.png" alt="Jiko Gaanan"
+          <img src="me.jpeg" alt="Jiko Gaanan"
             onerror="this.outerHTML='<div style=\'width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;color:#6b6b9a;font-size:0.75rem;font-family:Fira Code,monospace;\'><span style=\'font-size:3.5rem;opacity:0.2\'>👤</span><span>me.jpeg</span></div>'">
         </div>
         <div class="hero-stats">
           <div class="hstat">
-            <div class="hstat-num">3</div>
-            <div class="hstat-label">Projects</div>
+            <div class="hstat-num">Daily</div>
+            <div class="hstat-label">SQL Queries</div>
           </div>
           <div class="hstat">
             <div class="hstat-num">1 yr</div>
-            <div class="hstat-label">Experience</div>
+            <div class="hstat-label">Mfg Domain</div>
           </div>
           <div class="hstat">
-            <div class="hstat-num">2.5K</div>
-            <div class="hstat-label">Followers</div>
+            <div class="hstat-num">Self</div>
+            <div class="hstat-label">Taught</div>
           </div>
         </div>
         <div class="hero-card-footer">
           <div class="hcf-badges">
-            <span class="hbadge hb-c">Engineer</span>
-            <span class="hbadge hb-p">Creator</span>
-            <span class="hbadge hb-v">Analyst</span>
+            <span class="hbadge hb-c">SQL</span>
+            <span class="hbadge hb-p">Python</span>
+            <span class="hbadge hb-v">Excel</span>
           </div>
         </div>
       </div>
@@ -592,69 +595,63 @@
 <div class="marquee-wrap">
   <div class="mrow">
     <div class="mtrack">
+      <span class="mchip av"><span class="mdot v"></span>SQL</span>
+      <span class="mchip av"><span class="mdot v"></span>MySQL</span>
       <span class="mchip ac"><span class="mdot c"></span>Python</span>
       <span class="mchip ac"><span class="mdot c"></span>Pandas</span>
       <span class="mchip ac"><span class="mdot c"></span>NumPy</span>
-      <span class="mchip av"><span class="mdot v"></span>SQL</span>
-      <span class="mchip av"><span class="mdot v"></span>PostgreSQL</span>
       <span class="mchip ay"><span class="mdot y"></span>Excel</span>
+      <span class="mchip ay"><span class="mdot y"></span>Pivot Tables</span>
       <span class="mchip ay"><span class="mdot y"></span>Power BI</span>
       <span class="mchip ap"><span class="mdot p"></span>Matplotlib</span>
       <span class="mchip ap"><span class="mdot p"></span>Seaborn</span>
-      <span class="mchip"><span class="mdot g"></span>Scikit-learn</span>
-      <span class="mchip"><span class="mdot g"></span>TensorFlow</span>
-      <span class="mchip ac"><span class="mdot c"></span>OpenCV</span>
-      <span class="mchip"><span class="mdot g"></span>Arduino</span>
-      <span class="mchip"><span class="mdot g"></span>ESP32</span>
+      <span class="mchip ac"><span class="mdot c"></span>Jupyter</span>
       <span class="mchip av"><span class="mdot v"></span>Git</span>
-      <span class="mchip ay"><span class="mdot y"></span>Jupyter</span>
+      <span class="mchip"><span class="mdot g"></span>Google Sheets</span>
+      <span class="mchip"><span class="mdot g"></span>VS Code</span>
       <span class="msep">✦</span>
+      <span class="mchip av"><span class="mdot v"></span>SQL</span>
+      <span class="mchip av"><span class="mdot v"></span>MySQL</span>
       <span class="mchip ac"><span class="mdot c"></span>Python</span>
       <span class="mchip ac"><span class="mdot c"></span>Pandas</span>
       <span class="mchip ac"><span class="mdot c"></span>NumPy</span>
-      <span class="mchip av"><span class="mdot v"></span>SQL</span>
-      <span class="mchip av"><span class="mdot v"></span>PostgreSQL</span>
       <span class="mchip ay"><span class="mdot y"></span>Excel</span>
+      <span class="mchip ay"><span class="mdot y"></span>Pivot Tables</span>
       <span class="mchip ay"><span class="mdot y"></span>Power BI</span>
       <span class="mchip ap"><span class="mdot p"></span>Matplotlib</span>
       <span class="mchip ap"><span class="mdot p"></span>Seaborn</span>
-      <span class="mchip"><span class="mdot g"></span>Scikit-learn</span>
-      <span class="mchip"><span class="mdot g"></span>TensorFlow</span>
-      <span class="mchip ac"><span class="mdot c"></span>OpenCV</span>
-      <span class="mchip"><span class="mdot g"></span>Arduino</span>
-      <span class="mchip"><span class="mdot g"></span>ESP32</span>
+      <span class="mchip ac"><span class="mdot c"></span>Jupyter</span>
       <span class="mchip av"><span class="mdot v"></span>Git</span>
-      <span class="mchip ay"><span class="mdot y"></span>Jupyter</span>
+      <span class="mchip"><span class="mdot g"></span>Google Sheets</span>
+      <span class="mchip"><span class="mdot g"></span>VS Code</span>
       <span class="msep">✦</span>
     </div>
   </div>
   <div class="mrow">
     <div class="mtrack rev">
       <span class="mchip ay"><span class="mdot y"></span>Data Wrangling</span>
-      <span class="mchip ac"><span class="mdot c"></span>EDA</span>
-      <span class="mchip av"><span class="mdot v"></span>Machine Learning</span>
-      <span class="mchip ap"><span class="mdot p"></span>Computer Vision</span>
-      <span class="mchip ac"><span class="mdot c"></span>Data Visualization</span>
-      <span class="mchip"><span class="mdot g"></span>Test Automation</span>
-      <span class="mchip ay"><span class="mdot y"></span>Statistical Analysis</span>
-      <span class="mchip av"><span class="mdot v"></span>Embedded Systems</span>
+      <span class="mchip ac"><span class="mdot c"></span>Exploratory Analysis</span>
+      <span class="mchip av"><span class="mdot v"></span>Data Cleaning</span>
+      <span class="mchip ap"><span class="mdot p"></span>Data Visualization</span>
+      <span class="mchip ac"><span class="mdot c"></span>Defect Pattern Analysis</span>
+      <span class="mchip ay"><span class="mdot y"></span>Report Automation</span>
+      <span class="mchip av"><span class="mdot v"></span>Statistical Analysis</span>
       <span class="mchip ap"><span class="mdot p"></span>Dashboard Design</span>
-      <span class="mchip"><span class="mdot g"></span>QA Engineering</span>
-      <span class="mchip av"><span class="mdot v"></span>ETL</span>
-      <span class="mchip ap"><span class="mdot p"></span>Mechatronics</span>
+      <span class="mchip"><span class="mdot g"></span>ETL</span>
+      <span class="mchip ac"><span class="mdot c"></span>Production Data</span>
+      <span class="mchip av"><span class="mdot v"></span>Root Cause Analysis</span>
       <span class="msep">✦</span>
       <span class="mchip ay"><span class="mdot y"></span>Data Wrangling</span>
-      <span class="mchip ac"><span class="mdot c"></span>EDA</span>
-      <span class="mchip av"><span class="mdot v"></span>Machine Learning</span>
-      <span class="mchip ap"><span class="mdot p"></span>Computer Vision</span>
-      <span class="mchip ac"><span class="mdot c"></span>Data Visualization</span>
-      <span class="mchip"><span class="mdot g"></span>Test Automation</span>
-      <span class="mchip ay"><span class="mdot y"></span>Statistical Analysis</span>
-      <span class="mchip av"><span class="mdot v"></span>Embedded Systems</span>
+      <span class="mchip ac"><span class="mdot c"></span>Exploratory Analysis</span>
+      <span class="mchip av"><span class="mdot v"></span>Data Cleaning</span>
+      <span class="mchip ap"><span class="mdot p"></span>Data Visualization</span>
+      <span class="mchip ac"><span class="mdot c"></span>Defect Pattern Analysis</span>
+      <span class="mchip ay"><span class="mdot y"></span>Report Automation</span>
+      <span class="mchip av"><span class="mdot v"></span>Statistical Analysis</span>
       <span class="mchip ap"><span class="mdot p"></span>Dashboard Design</span>
-      <span class="mchip"><span class="mdot g"></span>QA Engineering</span>
-      <span class="mchip av"><span class="mdot v"></span>ETL</span>
-      <span class="mchip ap"><span class="mdot p"></span>Mechatronics</span>
+      <span class="mchip"><span class="mdot g"></span>ETL</span>
+      <span class="mchip ac"><span class="mdot c"></span>Production Data</span>
+      <span class="mchip av"><span class="mdot v"></span>Root Cause Analysis</span>
       <span class="msep">✦</span>
     </div>
   </div>
@@ -670,13 +667,27 @@
     </div>
     <div class="about-grid">
       <div>
-        <p>I'm a <strong>BS Mechatronics Engineering graduate</strong> from Batangas State University, currently working as a Test Engineer at Kinpo Electronics Philippines. My role sits at the intersection of hardware, software, and data. I work with real production test data every day in a manufacturing environment.</p>
+        <p>I'm a <strong>Test Engineer at Kinpo Electronics Philippines</strong> — an electronics manufacturing company — where I test USB security keys on the production line. My daily work involves pulling test result data from databases using SQL, running Python scripts to automate hardware operations like retesting, deleting, and seed implantation, and using Excel to track defects and corrective actions.</p>
         <br>
-        <p>I understand how data is physically collected, what causes it to break, and how to interpret it in context. I have written SQL to pull test results, maintain Python scripts for testing automation, and trained ML models on real sensor datasets.</p>
+        <p>The defect traceability system I use on my line? <strong>I built it myself in Excel</strong> — nobody asked me to. There was no structured record for defects and corrective actions, so I created one. That instinct — seeing a data gap and filling it — is what's pushing me toward data analytics as a full-time role.</p>
         <br>
-        <p>Outside of work, I document my projects and learning journey online. I post on platforms like Tiktok, Youtube, Instagram, and Facebook to showcase Mechatronics Engineering, tech, and how I taught myself to continuous learning and upskilling.</p>
+        <p>I'm honest about where I am: I know SQL, Python basics, and Excel well. I'm actively building the analytical layer on top of that — studying data analytics through structured practice, learning visualization and business reporting, and working toward my first data certification. I'm looking for a role where I can bring my manufacturing domain knowledge and grow my analytics skills in a real environment.</p>
       </div>
       <div class="about-cards">
+        <div class="about-card">
+          <div class="ac-icon">🏭</div>
+          <div>
+            <div class="ac-title">Test Engineer — USB Security Keys</div>
+            <div class="ac-sub">Kinpo Electronics Philippines · Electronics Manufacturing · 2025–Present</div>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="ac-icon">📋</div>
+          <div>
+            <div class="ac-title">Built Defect Traceability System</div>
+            <div class="ac-sub">Self-initiated · Excel · Defect tracking & corrective actions</div>
+          </div>
+        </div>
         <div class="about-card">
           <div class="ac-icon">🎓</div>
           <div>
@@ -685,24 +696,10 @@
           </div>
         </div>
         <div class="about-card">
-          <div class="ac-icon">🏭</div>
+          <div class="ac-icon">🧠</div>
           <div>
-            <div class="ac-title">Test Engineer</div>
-            <div class="ac-sub">Kinpo Electronics Philippines · 2025–Present</div>
-          </div>
-        </div>
-        <div class="about-card">
-          <div class="ac-icon">📊</div>
-          <div>
-            <div class="ac-title">Data & ML Projects</div>
-            <div class="ac-sub">3 completed projects using Python, OpenCV & TensorFlow</div>
-          </div>
-        </div>
-        <div class="about-card">
-          <div class="ac-icon">📱</div>
-          <div>
-            <div class="ac-title">Tech Content Creator</div>
-            <div class="ac-sub">@mechatrojiks · ESP32, Arduino, Data, Robotics</div>
+            <div class="ac-title">Actively Upskilling</div>
+            <div class="ac-sub">Data Analytics · SQL · Visualization · Pursuing certification</div>
           </div>
         </div>
       </div>
@@ -719,50 +716,35 @@
       <div class="sec-line"></div>
     </div>
     <div class="skills-grid">
-      <div class="sk-card c">
-        <div class="sk-top"><div class="sk-icon si-c">Py</div><div class="sk-name">Python</div></div>
-        <div class="sk-desc">Data wrangling, automation, and ML pipelines. Used across all three major projects and daily work tasks.</div>
-        <div class="sk-tags"><span class="sktag">Pandas</span><span class="sktag">NumPy</span><span class="sktag">Matplotlib</span><span class="sktag">Seaborn</span><span class="sktag">Jupyter</span></div>
-      </div>
       <div class="sk-card v">
         <div class="sk-top"><div class="sk-icon si-v">SQL</div><div class="sk-name">SQL</div></div>
-        <div class="sk-desc">Extracting and querying production test result data from databases. Used daily on the job.</div>
-        <div class="sk-tags"><span class="sktag">MySQL</span><span class="sktag">Joins</span><span class="sktag">Aggregations</span><span class="sktag">Subqueries</span></div>
-      </div>
-      <div class="sk-card v">
-        <div class="sk-top"><div class="sk-icon si-v">HTML</div><div class="sk-name">HTML</div></div>
-        <div class="sk-desc"></div>
-        <div class="sk-tags"><span class="sktag">MySQL</span><span class="sktag">Joins</span><span class="sktag">Aggregations</span><span class="sktag">Subqueries</span></div>
-      </div>
-      <div class="sk-card v">
-        <div class="sk-top"><div class="sk-icon si-v">CSS</div><div class="sk-name">CSS</div></div>
-        <div class="sk-desc"></div>
-        <div class="sk-tags"><span class="sktag">MySQL</span><span class="sktag">Joins</span><span class="sktag">Aggregations</span><span class="sktag">Subqueries</span></div>
-      </div>        
-      <div class="sk-card v">
-        <div class="sk-top"><div class="sk-icon si-v">JS</div><div class="sk-name">JAVASCRIPT</div></div>
-        <div class="sk-desc">Extracting and querying production test result data from databases. Used daily on the job.</div>
-        <div class="sk-tags"><span class="sktag">MySQL</span><span class="sktag">Joins</span><span class="sktag">Aggregations</span><span class="sktag">Subqueries</span></div>
-      </div>          
-      <div class="sk-card y">
-        <div class="sk-top"><div class="sk-icon si-y">XL</div><div class="sk-name">Excel</div></div>
-        <div class="sk-desc">Building structured reports, automated data logs, and dashboards for engineering teams.</div>
-        <div class="sk-tags"><span class="sktag">Pivot Tables</span><span class="sktag">VLOOKUP</span><span class="sktag">Data Logging</span><span class="sktag">Dashboards</span></div>
-      </div>
-      <div class="sk-card p">
-        <div class="sk-top"><div class="sk-icon si-p">ML</div><div class="sk-name">Machine Learning</div></div>
-        <div class="sk-desc">Trained and deployed CV models for thermal imaging and behavioral pattern recognition in real projects.</div>
-        <div class="sk-tags"><span class="sktag">TensorFlow</span><span class="sktag">YOLO</span><span class="sktag">OpenCV</span><span class="sktag">Computer Vision</span></div>
+        <div class="sk-desc">Used daily to pull production test result data from manufacturing databases. I write queries to filter, extract, and review test outcomes for the USB security key line.</div>
+        <div class="sk-tags"><span class="sktag">SELECT</span><span class="sktag">Filtering</span><span class="sktag">Joins</span><span class="sktag">Aggregations</span><span class="sktag">Production DBs</span></div>
       </div>
       <div class="sk-card c">
-        <div class="sk-top"><div class="sk-icon si-c">C++</div><div class="sk-name">Embedded / C++</div></div>
-        <div class="sk-desc">Programming microcontrollers for IoT and sensor systems — the origin of the data I later analyze.</div>
-        <div class="sk-tags"><span class="sktag">Arduino</span><span class="sktag">ESP32</span><span class="sktag">C++</span><span class="sktag">Sensors</span><span class="sktag">IoT</span></div>
+        <div class="sk-top"><div class="sk-icon si-c">Py</div><div class="sk-name">Python</div></div>
+        <div class="sk-desc">Write and run automation scripts for hardware testing operations — retesting failed units, deleting records, and implanting seeds (unique IDs and passwords) on USB security keys.</div>
+        <div class="sk-tags"><span class="sktag">Automation</span><span class="sktag">Hardware Scripts</span><span class="sktag">Testing Workflows</span><span class="sktag">Self-taught</span></div>
+      </div>
+      <div class="sk-card y">
+        <div class="sk-top"><div class="sk-icon si-y">XL</div><div class="sk-name">Excel</div></div>
+        <div class="sk-desc">Built a defect traceability system from scratch — tracking defects, root causes, and corrective actions for the production line. Self-initiated with no formal instruction.</div>
+        <div class="sk-tags"><span class="sktag">Defect Tracking</span><span class="sktag">Traceability</span><span class="sktag">Corrective Actions</span><span class="sktag">Data Entry</span><span class="sktag">Reporting</span></div>
+      </div>
+      <div class="sk-card p">
+        <div class="sk-top"><div class="sk-icon si-p">📈</div><div class="sk-name">Data Analytics — Learning</div></div>
+        <div class="sk-desc">Actively studying data analytics through structured practice — exploratory analysis, data cleaning, and visualization. Applying what I learn immediately on real data.</div>
+        <div class="sk-tags"><span class="sktag">Pandas</span><span class="sktag">Matplotlib</span><span class="sktag">EDA</span><span class="sktag">In Progress</span></div>
+      </div>
+      <div class="sk-card av">
+        <div class="sk-top"><div class="sk-icon si-v">🏭</div><div class="sk-name">Manufacturing Domain</div></div>
+        <div class="sk-desc">One year working directly on an electronics production line — testing USB security hardware, handling fixtures, and understanding how production data is generated at the source.</div>
+        <div class="sk-tags"><span class="sktag">Electronics Mfg</span><span class="sktag">USB Security Keys</span><span class="sktag">Hardware Testing</span><span class="sktag">Production QA</span></div>
       </div>
       <div class="sk-card g">
-        <div class="sk-top"><div class="sk-icon si-g">⚙</div><div class="sk-name">Dev Tools</div></div>
-        <div class="sk-desc">Version control, notebooks, and productivity tools across all personal and client work.</div>
-        <div class="sk-tags"><span class="sktag">Git</span><span class="sktag">GitHub</span><span class="sktag">VS Code</span><span class="sktag">Jupyter</span><span class="sktag">Google Sheets</span></div>
+        <div class="sk-top"><div class="sk-icon si-g">🔧</div><div class="sk-name">Self-Taught Mindset</div></div>
+        <div class="sk-desc">Everything I know — SQL, Python, Excel systems — I taught myself on the job or through independent study. I learn by doing and I don't wait to be told to improve something.</div>
+        <div class="sk-tags"><span class="sktag">Independent Learning</span><span class="sktag">YouTube</span><span class="sktag">Practice Projects</span><span class="sktag">Upskilling Daily</span></div>
       </div>
     </div>
   </div>
@@ -780,18 +762,16 @@
       <div>
         <div class="exp-col-label">Work Experience</div>
         <div class="exp-item">
-          <div class="exp-role">Test Engineer</div>
-          <div class="exp-company">Kinpo Electronics Philippines, Inc · Manufacturing</div>
+          <div class="exp-role">Test Engineer — USB Security Keys</div>
+          <div class="exp-company">Kinpo Electronics Philippines, Inc · Electronics Manufacturing</div>
           <div class="exp-date">2025 – Present</div>
           <ul class="exp-bullets">
-            <li>Extracted and queried test result data from production databases using SQL and Excel</li>
-            <li>Wrote Python scripts to automate repetitive data cleaning and reporting tasks</li>
-            <li>Identified defect patterns in hardware test data and reported findings to engineering teams</li>
-            <li>Worked daily with sensor data generated from hardware test setups</li>
+            <li>Test USB security key hardware on the production line — operating test fixtures and validating unit pass/fail outcomes</li>
+            <li>Write and execute Python scripts to automate hardware operations including retesting failed units, deleting records, and implanting seeds (unique identifiers and passwords) onto devices</li>
+            <li>Pull production test result data from databases using SQL to review outcomes and support defect investigation</li>
+            <li>Built a defect traceability and corrective action tracker in Excel — self-initiated, no formal instruction — to create the first structured defect record for the production line</li>
+            <li>Use Excel daily to log, track, and report on production defects and the actions taken to resolve them</li>
           </ul>
-          <div class="exp-tip">
-            💡 <strong>To do:</strong> Add specific numbers — units tested per day, time saved by automation, defect rate improvements. Numbers make this section much stronger.
-          </div>
         </div>
       </div>
       <div>
@@ -801,18 +781,19 @@
           <div class="exp-company">Batangas State University – TNEU</div>
           <div class="exp-date">2020 – 2024</div>
           <ul class="exp-bullets">
-            <li>Thesis on ML-based physio-behavioral monitoring using thermal and multi-sensor data</li>
-            <li>Built and programmed embedded systems using Arduino and ESP32</li>
-            <li>Developed data logging pipelines outputting structured Excel reports</li>
+            <li>Thesis: built an ML system that collected, processed, and logged multi-sensor data into structured Excel outputs</li>
+            <li>Designed data pipelines from physical sensors through to analysis-ready formats</li>
+            <li>Developed automated data logging systems replacing manual record-keeping</li>
           </ul>
         </div>
-
-        <div class="exp-col-label" style="margin-top:1.8rem;">Certifications</div>
+        <div class="exp-col-label" style="margin-top:1.8rem;">Currently Pursuing</div>
         <div class="exp-item">
-          <div class="exp-role" style="color:var(--faint);font-style:italic;font-weight:400;font-size:0.85rem;">None listed yet</div>
-          <div class="exp-tip" style="margin-top:0.6rem;">
-            💡 <strong>Recommended:</strong> Google Data Analytics Certificate, Microsoft PL-300 (Power BI), or freeCodeCamp SQL. Adding even one cert significantly strengthens your profile.
-          </div>
+          <div class="exp-role" style="color:var(--cyan); font-size:0.88rem;">Self-Directed Data Analytics Training</div>
+          <ul class="exp-bullets" style="margin-top:0.7rem;">
+            <li>Studying exploratory data analysis, data cleaning, and visualization through structured practice</li>
+            <li>Applying skills immediately on real datasets — not just watching, but doing</li>
+            <li>Target certifications: Google Data Analytics Certificate, freeCodeCamp SQL</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -827,63 +808,66 @@
       <h2>Projects</h2>
       <div class="sec-line"></div>
     </div>
-    <div class="proj-notice">
-      <span>⚠</span>
-      <span><strong>Action needed:</strong> Replace the <code>#</code> links below with real GitHub repo links. Even a basic repo makes a big difference to recruiters reviewing your profile.</span>
-    </div>
     <div class="proj-list">
-      <a href="#" class="proj-card">
+      <div class="proj-card" style="cursor:default;">
         <span class="proj-num">01</span>
         <div>
           <div class="proj-badges">
-            <span class="pbadge pb-c">Thesis</span>
-            <span class="pbadge pb-v">Freelance · Student Client</span>
+            <span class="pbadge pb-c">Self-Initiated · Work</span>
+            <span class="pbadge pb-v">Excel · Data Tracking</span>
           </div>
-          <div class="proj-title">ML-Based Physio-Behavioral Analysis with Data Logging</div>
-          <div class="proj-desc">Built a machine learning system that monitors physio-behavioral patterns in chicks using a thermal camera and multiple environment sensors. All readings are automatically structured and logged into Excel, giving farmers an early-warning record to detect at-risk chicks before losses occur.</div>
-          <div class="proj-result">Automated Excel logs replaced manual mortality tracking</div>
+          <div class="proj-title">Defect Traceability & Corrective Action Tracker</div>
+          <div class="proj-desc">There was no structured way to record defects and corrective actions on the production line — so I built one. Designed and built a defect traceability system in Excel from scratch, without being asked, to create the first organized data record for the USB security key testing line. The tracker logs each defect, its root cause, and the corrective action taken.</div>
+          <div class="proj-result">First structured defect record on the production line — built entirely on my own initiative</div>
           <div class="proj-tags">
-            <span class="ptag hi">Python</span><span class="ptag hi">Machine Learning</span>
-            <span class="ptag hi">Excel</span><span class="ptag hi">Data Logging</span>
-            <span class="ptag">Thermal Camera</span><span class="ptag">Embedded Systems</span>
+            <span class="ptag hi">Excel</span>
+            <span class="ptag hi">Defect Tracking</span>
+            <span class="ptag hi">Self-Initiated</span>
+            <span class="ptag">Corrective Actions</span>
+            <span class="ptag">Manufacturing</span>
           </div>
+          <div style="margin-top:0.8rem; font-size:0.68rem; color:var(--faint); font-family:'Fira Code',monospace;">Internal work tool · Available to discuss in detail</div>
         </div>
-        <span class="proj-arrow">↗</span>
-      </a>
-      <a href="#" class="proj-card">
+      </div>
+      <div class="proj-card" style="cursor:default;">
         <span class="proj-num">02</span>
         <div>
           <div class="proj-badges">
-            <span class="pbadge pb-c">Capstone</span>
-            <span class="pbadge pb-v">Freelance · Student Client</span>
+            <span class="pbadge pb-c">Thesis · Freelance</span>
+            <span class="pbadge pb-v">Python · ML · Data Pipeline</span>
           </div>
-          <div class="proj-title">Automated University Scheduling System</div>
-          <div class="proj-desc">University scheduling was done manually — error-prone and time-consuming every semester. Built a constraint-based scheduling application that automatically assigns rooms, professors, and time slots while eliminating conflicts.</div>
-          <div class="proj-result">Successfully delivered and defended by the client</div>
+          <div class="proj-title">Multi-Sensor Data Pipeline with Behavioral Analysis</div>
+          <div class="proj-desc">Built a full data pipeline from raw sensor inputs to structured Excel logs. Multiple environment sensors fed continuous readings into a Python processing layer that cleaned and structured the data automatically. An ML layer then identified behavioral anomalies — giving the end user an early warning system based on patterns in the logged data.</div>
+          <div class="proj-result">Automated data logging replaced 100% of manual daily record-keeping</div>
           <div class="proj-tags">
-            <span class="ptag hi">Python</span><span class="ptag hi">Optimization</span>
-            <span class="ptag">Database Design</span><span class="ptag">Algorithm</span>
+            <span class="ptag hi">Python</span>
+            <span class="ptag hi">Data Pipeline</span>
+            <span class="ptag hi">Excel</span>
+            <span class="ptag">Machine Learning</span>
+            <span class="ptag">Sensor Data</span>
           </div>
+          <div style="margin-top:0.8rem; font-size:0.68rem; color:var(--faint); font-family:'Fira Code',monospace;">Code is confidential · Case study available on request</div>
         </div>
-        <span class="proj-arrow">↗</span>
-      </a>
-      <a href="#" class="proj-card">
+      </div>
+      <div class="proj-card" style="cursor:default;">
         <span class="proj-num">03</span>
         <div>
           <div class="proj-badges">
-            <span class="pbadge pb-c">Thesis</span>
-            <span class="pbadge pb-v">Freelance · Student Client</span>
+            <span class="pbadge pb-c">Freelance · Capstone</span>
+            <span class="pbadge pb-v">Python · Optimization</span>
           </div>
-          <div class="proj-title">ML-Based Thermal Weapon Detection</div>
-          <div class="proj-desc">Built a real-time weapon detection system using thermal imaging and a custom-trained ML model. Designed for small stores that cannot afford traditional security systems — an affordable automated way to detect concealed weapons.</div>
-          <div class="proj-result">Successfully delivered and defended by the client</div>
+          <div class="proj-title">Automated University Scheduling System</div>
+          <div class="proj-desc">University scheduling was done manually every semester — error-prone and time-consuming. Modeled the problem as a constraint satisfaction problem, structured all variables into a dataset, and built an algorithm that automatically assigns rooms, professors, and time slots while eliminating conflicts.</div>
+          <div class="proj-result">Client successfully delivered and defended — fully automated conflict resolution</div>
           <div class="proj-tags">
-            <span class="ptag hi">Python</span><span class="ptag hi">OpenCV</span>
-            <span class="ptag hi">TensorFlow</span><span class="ptag">Thermal Imaging</span>
+            <span class="ptag hi">Python</span>
+            <span class="ptag hi">Data Modeling</span>
+            <span class="ptag">Optimization</span>
+            <span class="ptag">Algorithm Design</span>
           </div>
+          <div style="margin-top:0.8rem; font-size:0.68rem; color:var(--faint); font-family:'Fira Code',monospace;">Code is confidential · Case study available on request</div>
         </div>
-        <span class="proj-arrow">↗</span>
-      </a>
+      </div>
     </div>
   </div>
 </section>
@@ -891,39 +875,33 @@
 <!-- CONTENT -->
 <section class="content-sec" id="content">
   <div class="container">
-    <span class="sec-label">05 Online</span>
+    <span class="sec-label">05 Communication</span>
     <div class="sec-heading">
-      <h2>Content Creation</h2>
+      <h2>Explaining Data Clearly</h2>
       <div class="sec-line"></div>
     </div>
     <div class="content-inner">
       <div class="content-left">
-        <p>I document my tech projects and learning journey on TikTok — covering ESP32, Arduino, mechatronics, robotics, and data analytics. Building in public and explaining things clearly.</p>
-        <div class="c-stats">
-          <div>
-            <div class="cstat-num cy">2.5K</div>
-            <div class="cstat-label">Followers</div>
-          </div>
-          <div>
-            <div class="cstat-num pk">Tech</div>
-            <div class="cstat-label">Niche</div>
-          </div>
-        </div>
-        <div class="c-topics">
-          <span class="ctopic">ESP32</span><span class="ctopic">Arduino</span>
-          <span class="ctopic">Mechatronics</span><span class="ctopic">Data Analytics</span>
-          <span class="ctopic">Robotics</span><span class="ctopic">Desk Setup</span>
-          <span class="ctopic">Programming</span><span class="ctopic">Projects</span>
+        <p>A data analyst's job isn't just finding insights — it's communicating them to people who weren't in the data. I practice this deliberately by documenting my projects and learning publicly, breaking down technical concepts into plain language for a non-technical audience.</p>
+        <br>
+        <p>This habit makes me a better analyst. If I can explain a concept clearly online, I can explain a finding clearly in a meeting, a report, or a dashboard.</p>
+        <div class="c-topics" style="margin-top:1.2rem;">
+          <span class="ctopic">Data Analytics</span>
+          <span class="ctopic">Python Tutorials</span>
+          <span class="ctopic">SQL Walkthroughs</span>
+          <span class="ctopic">Engineering Projects</span>
+          <span class="ctopic">Upskilling Journey</span>
+          <span class="ctopic">Tech Explanations</span>
         </div>
       </div>
       <div>
         <div class="c-posts">
-          <div class="c-post"><div class="c-play">🤖</div><div><div class="c-post-title">ESP32 Robotics Build</div><div class="c-post-sub">Embedded systems content</div></div></div>
-          <div class="c-post"><div class="c-play">📊</div><div><div class="c-post-title">Data Analytics Walkthrough</div><div class="c-post-sub">Python & Pandas tutorial</div></div></div>
-          <div class="c-post"><div class="c-play">⚙️</div><div><div class="c-post-title">Mechatronics Project</div><div class="c-post-sub">Arduino automation</div></div></div>
-          <div class="c-post"><div class="c-play">🖥️</div><div><div class="c-post-title">Desk Setup Tour</div><div class="c-post-sub">Developer workspace</div></div></div>
+          <div class="c-post"><div class="c-play">📊</div><div><div class="c-post-title">Data Analytics Walkthrough</div><div class="c-post-sub">Python & Pandas — explained simply</div></div></div>
+          <div class="c-post"><div class="c-play">🗄️</div><div><div class="c-post-title">SQL for Beginners</div><div class="c-post-sub">Real queries on real data</div></div></div>
+          <div class="c-post"><div class="c-play">🤖</div><div><div class="c-post-title">ML Project Breakdown</div><div class="c-post-sub">How I built and trained the model</div></div></div>
+          <div class="c-post"><div class="c-play">📈</div><div><div class="c-post-title">Reading Production Data</div><div class="c-post-sub">What test data actually looks like</div></div></div>
         </div>
-        <a href="https://www.tiktok.com/@mechatrojiks" class="tiktok-link">▶ &nbsp;Visit @mechatrojiks on TikTok</a>
+        <a href="https://www.tiktok.com/@mechatrojiks" class="tiktok-link">▶ &nbsp;Follow the learning journey @mechatrojiks</a>
       </div>
     </div>
   </div>
@@ -939,9 +917,9 @@
     </div>
     <div class="contact-inner">
       <div class="contact-left">
-        <p>I'm open to opportunities in engineering, data, QA, or any tech role where I can contribute and keep growing. Reach out through any of the channels below.</p>
+        <p>I'm looking for a <strong>Junior Data Analyst or Data Specialist role</strong> — ideally in manufacturing, electronics, or a technical domain where my production floor context is an advantage. I bring real SQL and Python experience, a self-built data tracking system, and the mindset to learn fast on the job.</p>
         <div class="c-links">
-          <a href="mailto:jikogaanan@email.com" class="c-link"><span>✉ &nbsp;jikogaanan@email.com</span><span>→</span></a>
+          <a href="/cdn-cgi/l/email-protection#412b282a2e2620202f202f01242c20282d6f222e2c" class="c-link"><span>✉ &nbsp;<span class="__cf_email__" data-cfemail="573d3e3c3830363639363917323a363e3b7934383a">[email&#160;protected]</span></span><span>→</span></a>
           <a href="https://www.linkedin.com/in/jiko-gaanan/" class="c-link"><span>💼 &nbsp;LinkedIn</span><span>→</span></a>
           <a href="https://github.com/mechatrojiks-code" class="c-link"><span>🐙 &nbsp;GitHub</span><span>→</span></a>
           <a href="https://www.tiktok.com/@mechatrojiks" class="c-link"><span>📱 &nbsp;TikTok @mechatrojiks</span><span>→</span></a>
@@ -968,19 +946,122 @@
   </span>
 </footer>
 
+<style>
+  #dot-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  body {
+    position: relative;
+  }
+  nav, section, .marquee-wrap, footer {
+    position: relative;
+    z-index: 1;
+  }
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: dotPulse var(--dur, 3s) ease-in-out infinite alternate,
+               dotDrift var(--mdur, 20s) linear infinite;
+  }
+  @keyframes dotPulse {
+    0%   { opacity: var(--lo, 0.08); }
+    100% { opacity: var(--hi, 0.45); }
+  }
+  @keyframes dotDrift {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(var(--dx1, 4px), var(--dy1, -8px)); }
+    50%  { transform: translate(var(--dx2, -5px), var(--dy2, -16px)); }
+    75%  { transform: translate(var(--dx3, 3px), var(--dy3, -24px)); }
+    100% { transform: translate(var(--dx4, -2px), var(--dy4, -32px)); }
+  }
+</style>
+
+<script>
+  (function () {
+    const COLORS  = ['#00f5ff','#ff2d78','#9b5cf6','#ffffff','#c0c0e0','#00f5ff','#ffffff'];
+    const COUNT   = 350;
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+    function pick(arr)      { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function spawnDots() {
+      // remove old layer if re-running
+      const old = document.getElementById('dot-layer');
+      if (old) old.remove();
+
+      const layer = document.createElement('div');
+      layer.id = 'dot-layer';
+      document.body.prepend(layer);
+
+      const pageW = document.body.scrollWidth;
+      const pageH = document.body.scrollHeight;
+
+      for (let i = 0; i < COUNT; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+
+        const size  = rand(0.8, 2.4);
+        const color = pick(COLORS);
+        const left  = rand(0, 100);   // percent
+        const top   = rand(0, 100);   // percent of full page
+
+        // random drift offsets
+        const dx1 = rand(-8, 8)  + 'px';
+        const dy1 = rand(-12, 0) + 'px';
+        const dx2 = rand(-10, 10)+ 'px';
+        const dy2 = rand(-20, -4)+ 'px';
+        const dx3 = rand(-8, 8)  + 'px';
+        const dy3 = rand(-28, -8)+ 'px';
+        const dx4 = rand(-6, 6)  + 'px';
+        const dy4 = rand(-36,-12)+ 'px';
+
+        dot.style.cssText = `
+          width: ${size}px;
+          height: ${size}px;
+          left: ${left}%;
+          top: ${top}%;
+          background: ${color};
+          --lo: ${rand(0.06, 0.18)};
+          --hi: ${rand(0.3, 0.65)};
+          --dur: ${rand(2, 5)}s;
+          --mdur: ${rand(15, 40)}s;
+          --dx1:${dx1}; --dy1:${dy1};
+          --dx2:${dx2}; --dy2:${dy2};
+          --dx3:${dx3}; --dy3:${dy3};
+          --dx4:${dx4}; --dy4:${dy4};
+          animation-delay: -${rand(0, 30)}s;
+        `;
+
+        layer.appendChild(dot);
+      }
+    }
+
+    // wait for full page to render so scrollHeight is accurate
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', spawnDots);
+    } else {
+      spawnDots();
+    }
+
+    // re-spawn on resize to recalculate page height
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(spawnDots, 300);
+    });
+  })();
+</script>
+
 <script>
   const hamburger = document.getElementById('hamburger');
   const navMenu   = document.getElementById('nav-menu');
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
-    navMenu.classList.toggle('open');
-  });
-  navMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      navMenu.classList.remove('open');
-    });
-  });
-</script>
-</body>
-</html>
+    navMenu.cl
